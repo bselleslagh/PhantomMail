@@ -55,4 +55,5 @@ lint.ignore = [
 
 exclude = [
     "examples/*",
+    "tests/*",
 ]
