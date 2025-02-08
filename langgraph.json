@@ -1,0 +1,11 @@
+{
+    "dockerfile_lines": [],
+    "graphs": {
+      "graph": "./src/faketrix/graphs/graph.py:graph"
+    },
+    "env": ".env",
+    "python_version": "3.13",
+    "dependencies": [
+      "."
+    ]
+  }
