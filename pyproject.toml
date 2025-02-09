@@ -1,6 +1,6 @@
 [project]
 name = "faketrix"
-version = "0.1.1"
+version = "0.1.2"
 description = "Faketrix is an app that generates fake order data and customer emails. "
 readme = "README.md"
 authors = [
