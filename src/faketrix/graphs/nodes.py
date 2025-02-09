@@ -3,6 +3,8 @@ import random
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
+from faketrix.fake_complaint import FakeComplaint
+from faketrix.fake_question import TransportQuestionGenerator
 from faketrix.fake_transport import TransportOrderGenerator
 from faketrix.graphs.state import FakeEmailState
 from faketrix.models.email import Email, FullEmail
@@ -16,28 +18,70 @@ class GraphNodes:
         """Initialize the graph nodes."""
         self.llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-001", temperature=0.5)
 
-    def generate_fake_data(self, state: FakeEmailState, config):
-        """Generate a fake transport order."""
-        transport_order_generator = TransportOrderGenerator()
-        transport_order = transport_order_generator.generate().model_dump()
-        return {"email_attributes": transport_order}
+    def email_types(self, state: FakeEmailState, config):
+        """Get the email types."""
+        types = ["order", "question", "complaint"]
 
-    def generate_email(self, state: FakeEmailState, config):
-        """Generate a fake transport order email."""
-        writing_style = [
-            "fast and with spelling mistakes",
-            "detailed and polite",
-            "in the oringal language of the sender",
-        ]
+        return random.choice(types)
+
+    def generate_declaration(self, state: FakeEmailState, config):
+        """Generate a fake customs declaration email."""
+        return {"email_attributes": {}}
+
+    def generate_question(self, state: FakeEmailState, config):
+        """Generate a fake question email."""
+        question_generator = TransportQuestionGenerator()
+        question = question_generator.generate_question()
 
         instruction = SystemMessage(
             content="You are an assistant that generates fake emails. The emails are meant for Vectrix Logistcs NV"
         )
 
         prompt = HumanMessage(
-            content=f"""Generate a fake transport order email based on the following data. Your writing style should be {random.choice(writing_style)}. Write all details in the body.\n
+            content=f"""Generate a fake question email based on the following data. Write all details in the body.\n
+        {question}
+        """
+        )
+
+        messages = [instruction, prompt]
+        response = self.llm.invoke(messages)
+        messages.append(response)
+
+        return {"messages": messages}
+
+    def generate_complaint(self, state: FakeEmailState, config):
+        """Generate a fake complaint email."""
+        complaint_generator = FakeComplaint()
+        complaint = complaint_generator.generate_complaint()
+
+        instruction = SystemMessage(
+            content="You are an assistant that generates fake emails. The emails are meant for Vectrix Logistcs NV"
+        )
+
+        prompt = HumanMessage(
+            content=f"""Generate a fake complaint email based on the following data. Write all details in the body.\n
+        {complaint}
+        """
+        )
+        messages = [instruction, prompt]
+        response = self.llm.invoke(messages)
+        messages.append(response)
+
+        return {"messages": messages}
+
+    def generate_order(self, state: FakeEmailState, config):
+        """Generate a fake transport order email."""
+        transport_order_generator = TransportOrderGenerator()
+        transport_order = transport_order_generator.generate().model_dump()
+
+        instruction = SystemMessage(
+            content="You are an assistant that generates fake emails. The emails are meant for Vectrix Logistcs NV"
+        )
+
+        prompt = HumanMessage(
+            content=f"""Generate a fake transport order email based on the following data. Write all details in the body.\n
         Transport details:\n
-        {state["email_attributes"]}
+        {transport_order}
         """
         )
         messages = [instruction, prompt]

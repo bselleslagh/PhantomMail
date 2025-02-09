@@ -1,5 +1,12 @@
 # Faketrix
 
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+![GitHub License](https://img.shields.io/github/license/bselleslagh/faketrix)
+![GitHub Release](https://img.shields.io/github/v/release/bselleslagh/faketrix)
+![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/BenSelleslagh)
+
+
 A Python application that generates and sends fake transport order emails using Google's Gemini 2.0 Flash model and Resend for email delivery.
 
 ## Features
