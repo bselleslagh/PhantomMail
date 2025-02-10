@@ -2,8 +2,8 @@ import os
 
 from dotenv import load_dotenv
 
-from faketrix.graphs.graph import graph
-from faketrix.logger import setup_logger
+from phantommail.graphs.graph import graph
+from phantommail.logger import setup_logger
 
 load_dotenv()
 logger = setup_logger(__name__)

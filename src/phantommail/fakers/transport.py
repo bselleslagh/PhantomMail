@@ -3,7 +3,7 @@ from typing import List
 
 from faker import Faker
 
-from faketrix.models.transport import Address, Client, Goods, TransportOrder
+from phantommail.models.transport import Address, Client, Goods, TransportOrder
 
 
 class TransportOrderGenerator:

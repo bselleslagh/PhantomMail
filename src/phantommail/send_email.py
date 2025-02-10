@@ -4,7 +4,7 @@ import os
 
 import resend
 
-from faketrix.models.email import FullEmail
+from phantommail.models.email import FullEmail
 
 recipient_email = "ben@vectrix.ai"
 

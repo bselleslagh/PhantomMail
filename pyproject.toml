@@ -1,7 +1,7 @@
 [project]
-name = "faketrix"
+name = "phantommail"
 version = "0.1.2"
-description = "Faketrix is an app that generates fake order data and customer emails. "
+description = "phantommail is an app that generates fake order data and customer emails. "
 readme = "README.md"
 authors = [
     { name = "Ben Selleslagh", email = "ben@dataframe.be" } 
@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-faketrix = "faketrix:main"
+phantommail = "phantommail:main"
 
 [build-system]
 requires = ["hatchling"]

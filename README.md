@@ -1,9 +1,9 @@
-# Faketrix
+# PhantomMail
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
-![GitHub License](https://img.shields.io/github/license/bselleslagh/faketrix)
-![GitHub Release](https://img.shields.io/github/v/release/bselleslagh/faketrix)
+![GitHub License](https://img.shields.io/github/license/bselleslagh/phantommail)
+![GitHub Release](https://img.shields.io/github/v/release/bselleslagh/phantommail)
 ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/BenSelleslagh)
 
 
@@ -26,6 +26,28 @@ A Python application that generates and sends fake transport order emails using 
 uv sync
 ```
 
+### Install Pre-Commit Hooks
+
+To ensure code quality, install pre-commit hooks by running the following commands:
+
+1. **Set Up Git Hooks**:
+   ```bash
+   pre-commit install
+   ```
+   This will ensure the hooks run automatically before you commit any changes.
+
+2. **Run Hooks on All Files** (Optional):
+   ```bash
+   pre-commit run --all-files
+   ```
+   Use this command to apply the hooks across the entire codebase if you're contributing 
+   for the first time or after changes to the pre-commit config.
+
+Notes
+
+- Make sure to run these commands after cloning the repository.
+- For more details, refer to pre-commit documentation.
+
 
 ## Configuration
 
@@ -37,14 +59,14 @@ GOOGLE_API_KEY= # Your Google API key for Gemini
 SENDER_EMAIL= # Email address to send from
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY= # Optional: For LangChain debugging
-LANGCHAIN_PROJECT=faketrix
+LANGCHAIN_PROJECT=phantommail
 ```
 
 ## Usage
 Run the application using UV:
 
 ```bash
-uv run faketrix
+uv run phantommail
 ```
 
 The application will:
@@ -56,8 +78,8 @@ The application will:
 
 ## Project Structure
 
-- `src/faketrix/main.py`: Entry point and email recipient handling
-- `src/faketrix/graphs/`: LangGraph implementation
+- `src/phantommail/main.py`: Entry point and email recipient handling
+- `src/phantommail/graphs/`: LangGraph implementation
   - `state.py`: State management for the email generation pipeline
   - `nodes.py`: Graph nodes for data generation, email creation, and sending
 

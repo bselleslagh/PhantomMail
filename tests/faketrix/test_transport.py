@@ -1,8 +1,8 @@
 import pytest
 from faker import Faker
 
-from faketrix.fake_transport import TransportOrderGenerator
-from faketrix.models.transport import Address, Client, Goods, TransportOrder
+from phantommail.fakers.transport import TransportOrderGenerator
+from phantommail.models.transport import Address, Client, Goods, TransportOrder
 
 
 @pytest.fixture

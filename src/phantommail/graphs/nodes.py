@@ -3,12 +3,12 @@ import random
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from faketrix.fake_complaint import FakeComplaint
-from faketrix.fake_question import TransportQuestionGenerator
-from faketrix.fake_transport import TransportOrderGenerator
-from faketrix.graphs.state import FakeEmailState
-from faketrix.models.email import Email, FullEmail
-from faketrix.send_email import send_email
+from phantommail.fakers.complaint import FakeComplaint
+from phantommail.fakers.question import TransportQuestionGenerator
+from phantommail.fakers.transport import TransportOrderGenerator
+from phantommail.graphs.state import FakeEmailState
+from phantommail.models.email import Email, FullEmail
+from phantommail.send_email import send_email
 
 
 class GraphNodes:
@@ -100,7 +100,10 @@ class GraphNodes:
             "in the oringal language of the sender",
         ]
         prompt = HumanMessage(
-            content=f"Convert the draft email to HTML and return it as a function call. Make the email look messy and unprofessional. Your writing style should be {random.choice(writing_style)}."
+            content=f"""Convert the draft email to HTML and return it as a function call.\n
+Make the email look messy and unprofessional. Your writing style should be {random.choice(writing_style)}.
+You can also add some history, context and custom HTMLformatting to the email to make it look more realistic.
+            """
         )
         messages.append(prompt)
         response = llm_with_tools.invoke(messages)

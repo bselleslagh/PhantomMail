@@ -1,7 +1,7 @@
 {
     "dockerfile_lines": [],
     "graphs": {
-      "graph": "./src/faketrix/graphs/graph.py:graph"
+      "graph": "./src/phantommail/graphs/graph.py:graph"
     },
     "env": ".env",
     "python_version": "3.13",

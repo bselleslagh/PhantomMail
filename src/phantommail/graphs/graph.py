@@ -2,8 +2,8 @@ from typing import TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
-from faketrix.graphs.nodes import GraphNodes
-from faketrix.graphs.state import FakeEmailState
+from phantommail.graphs.nodes import GraphNodes
+from phantommail.graphs.state import FakeEmailState
 
 
 class ConfigSchema(TypedDict):
