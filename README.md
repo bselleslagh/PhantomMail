@@ -6,6 +6,8 @@
 ![GitHub Release](https://img.shields.io/github/v/release/bselleslagh/phantommail)
 ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/BenSelleslagh)
 
+[![PhantomMail Demo](https://img.youtube.com/vi/66VyoM42Tyk/0.jpg)](https://www.youtube.com/watch?v=66VyoM42Tyk "PhantomMail Demo")
+
 
 PhantomMail is a  Python application designed to generate and send realistic transport-related emails using advanced AI technology. It leverages Google's Gemini 2.0 Flash model for content generation and Resend for reliable email delivery. The application can automatically generate PDF attachments for documents like customs declarations, making the emails even more realistic and comprehensive.
 
