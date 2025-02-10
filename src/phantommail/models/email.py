@@ -17,3 +17,4 @@ class FullEmail(Email):
     to: List[str]
     cc: List[str] | None = None
     bcc: List[str] | None = None
+    attachments: List[str] | None = None

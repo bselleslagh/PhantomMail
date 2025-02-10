@@ -1,4 +1,4 @@
-# PhantomMail
+# PhantomMail 📧
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
@@ -7,7 +7,18 @@
 ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/BenSelleslagh)
 
 
-A Python application that generates and sends fake transport order emails using Google's Gemini 2.0 Flash model and Resend for email delivery.
+PhantomMail is a  Python application designed to generate and send realistic transport-related emails using advanced AI technology. It leverages Google's Gemini 2.0 Flash model for content generation and Resend for reliable email delivery. The application can automatically generate PDF attachments for documents like customs declarations, making the emails even more realistic and comprehensive.
+
+The application can generate four distinct types of transport-related emails:
+- **Transport Orders**: Creates realistic shipping orders with detailed pickup/delivery information
+- **Customs Declarations**: Generates comprehensive customs documentation with attachments
+- **Customer Inquiries**: Produces natural-sounding questions about shipments
+- **Complaint Emails**: Creates authentic-looking customer complaints
+
+The application is built with [LangGraph](https://langchain-ai.github.io/langgraph/), a framework for building and running graphs of computations.
+
+
+![PhantomMail Flow](.github/assets/phantommail_flow.png)
 
 ## Features
 
@@ -96,6 +107,20 @@ The application will:
 1. Create an account at [https://resend.com](https://resend.com)
 2. Get your API key from the dashboard
 3. Add the API key to your `.env.local` file
+
+## Deployment Options
+### Local
+Just the the following command (UV) to launch a local LangGraph server, it will open a LangGraph Studio UI for debugging the flow:
+
+```bash
+uvx --refresh --from "langgraph-cli[inmem]" --with-editable . --python 3.13 langgraph dev
+``` 
+### Self Hosted
+Please check out the offical LangGraph documentation located [here](https://langchain-ai.github.io/langgraph/how-tos/deploy-self-hosted/).
+
+### LangGraph Cloud
+Clone this repository, then login to LangSmith and deploy the project from there: https://langchain-ai.github.io/langgraph/cloud/quick_start/
+
 
 ## License
 MIT

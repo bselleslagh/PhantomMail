@@ -15,6 +15,7 @@ dependencies = [
     "langgraph-cli[inmem]>=0.1.71",
     "langgraph>=0.2.70",
     "resend>=2.6.0",
+    "xhtml2pdf>=0.2.16",
 ]
 
 [project.scripts]
@@ -50,7 +51,9 @@ lint.ignore = [
     "UP035",
     "D417",
     "E501",
-    "D100"
+    "D100",
+    "D203",
+    "D213",
 ]
 
 exclude = [

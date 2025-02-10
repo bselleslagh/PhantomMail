@@ -3,7 +3,8 @@ from typing import List
 
 from faker import Faker
 
-from phantommail.models.transport import Address, Client, Goods, TransportOrder
+from phantommail.models.goods import Goods
+from phantommail.models.transport import Address, Client, TransportOrder
 
 
 class TransportOrderGenerator:
@@ -37,16 +38,6 @@ class TransportOrderGenerator:
             email=self.fake_pickup.ascii_company_email(),
         )
 
-    def generate_goods(self) -> Goods:
-        """Generate a fake goods."""
-        return Goods(
-            name=self.fake_pickup.catch_phrase(),
-            quantity=random.randint(1, 100),
-            weight=random.randint(350, 1000),
-            volume=random.randint(10, 1000),
-            description=self.fake_pickup.sentence(),
-        )
-
     def generate_address(self, faker_instance: Faker) -> Address:
         """Generate a fake address."""
         return Address(
@@ -62,7 +53,6 @@ class TransportOrderGenerator:
     def generate(self) -> TransportOrder:
         """Generate a fake transport order."""
         client = self.generate_client()
-        goods = self.generate_goods()
         pickup_address = self.generate_address(self.fake_pickup)
         delivery_address = self.generate_address(self.fake_delivery)
 
@@ -71,7 +61,7 @@ class TransportOrderGenerator:
 
         return TransportOrder(
             client=client,
-            goods=goods,
+            goods=Goods.random(),
             pickup_address=pickup_address,
             delivery_address=delivery_address,
             loading_stops=loading_stops,

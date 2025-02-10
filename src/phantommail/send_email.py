@@ -1,5 +1,6 @@
 """Email sending functionality using the Resend API."""
 
+import base64
 import os
 
 import resend
@@ -9,7 +10,7 @@ from phantommail.models.email import FullEmail
 recipient_email = "ben@vectrix.ai"
 
 
-def send_email(email: FullEmail) -> str:
+def send(email: FullEmail) -> str:
     """Send an email to the recipient with the given subject and body.
 
     Args:
@@ -30,6 +31,14 @@ def send_email(email: FullEmail) -> str:
         "cc": email.cc,
         "bcc": email.bcc,
     }
+    if len(email.attachments) > 0:
+        params["attachments"] = [
+            {
+                "content": list(base64.b64decode(attachment.encode("utf-8"))),
+                "filename": f"attachment_{i}.pdf",
+            }
+            for i, attachment in enumerate(email.attachments)
+        ]
     try:
         email = resend.Emails.send(params)
         return f"Email sent successfully! ID: {email}"

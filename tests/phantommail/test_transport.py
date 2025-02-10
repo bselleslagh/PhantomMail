@@ -2,7 +2,8 @@ import pytest
 from faker import Faker
 
 from phantommail.fakers.transport import TransportOrderGenerator
-from phantommail.models.transport import Address, Client, Goods, TransportOrder
+from phantommail.models.transport import Address, Client, TransportOrder
+from phantommail.models.goods import Goods
 
 
 @pytest.fixture
@@ -23,7 +24,7 @@ def test_generate_client(generator):
 
 
 def test_generate_goods(generator):
-    goods = generator.generate_goods()
+    goods = Goods.random()
     assert isinstance(goods, Goods)
     assert isinstance(goods.name, str)
     assert 1 <= goods.quantity <= 100

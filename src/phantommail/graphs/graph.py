@@ -25,7 +25,7 @@ graph.add_conditional_edges(
     graph_nodes.email_types,
     {
         "order": "generate_order",
-        "generate_declaration": "generate_declaration",
+        "declaration": "generate_declaration",
         "question": "generate_question",
         "complaint": "generate_complaint",
     },

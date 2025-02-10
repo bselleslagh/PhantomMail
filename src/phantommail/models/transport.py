@@ -2,6 +2,8 @@ from typing import List
 
 from pydantic import BaseModel
 
+from phantommail.models.goods import Goods
+
 
 class Client(BaseModel):
     """A client of the transport company."""
@@ -12,16 +14,6 @@ class Client(BaseModel):
     address: str
     country: str
     email: str
-
-
-class Goods(BaseModel):
-    """The goods being transported."""
-
-    name: str
-    quantity: int
-    weight: float
-    volume: float
-    description: str
 
 
 class Address(BaseModel):

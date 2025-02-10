@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Declaration Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { width: 90%; margin: auto; border: 1px solid #000; padding: 20px; }
+        .header { text-align: center; font-weight: bold; font-size: 1.5em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        .bold { font-weight: bold; }
+        .center { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Import Declaration Report</div>
+        
+        <table>
+            <tr>
+                <td class="bold">Declaration:</td>
+                <td>[IMPORT_DECLARATION]</td>
+                <td class="bold">MRN:</td>
+                <td>[MRN]</td>
+            </tr>
+            <tr>
+                <td class="bold">Exporter:</td>
+                <td>[EXPORTER]</td>
+                <td class="bold">Importer:</td>
+                <td>[IMPORTER]</td>
+            </tr>
+            <tr>
+                <td class="bold">Declarant:</td>
+                <td>[DECLARANT]</td>
+                <td class="bold">Buyer:</td>
+                <td>[BUYER]</td>
+            </tr>
+        </table>
+        
+        <table>
+            <tr>
+                <th>Reference</th>
+                <th>Delivery Terms</th>
+                <th>Gross Mass (kg)</th>
+                <th>Net Mass (kg)</th>
+            </tr>
+            <tr>
+                <td>[REFERENCE]</td>
+                <td>[DELIVERY_TERMS]</td>
+                <td>[GROSS_MASS]</td>
+                <td>[NET_MASS]</td>
+            </tr>
+        </table>
+        
+        <table>
+            <tr>
+                <th>Description of Goods</th>
+                <th>TARIC Code</th>
+                <th>Invoice Total</th>
+            </tr>
+            <tr>
+                <td>[GOODS_DESCRIPTION]</td>
+                <td>[TARIC_CODE]</td>
+                <td>[INVOICE_TOTAL]</td>
+            </tr>
+        </table>
+        
+        <table>
+            <tr>
+                <th>Tax Type</th>
+                <th>Tax Base</th>
+                <th>Rate</th>
+                <th>Total Tax Assessed</th>
+            </tr>
+            <tr>
+                <td>Customs Duties</td>
+                <td>[CUSTOMS_DUTIES_BASE]</td>
+                <td>[CUSTOMS_DUTIES_RATE]</td>
+                <td>[CUSTOMS_DUTIES_TOTAL]</td>
+            </tr>
+            <tr>
+                <td>VAT</td>
+                <td>[VAT_BASE]</td>
+                <td>[VAT_RATE]</td>
+                <td>[VAT_TOTAL]</td>
+            </tr>
+        </table>
+        
+        <table>
+            <tr>
+                <th>Place and Date</th>
+                <th>Signature</th>
+            </tr>
+            <tr>
+                <td>[PLACE_DATE]</td>
+                <td>[SIGNATURE]</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
