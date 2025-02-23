@@ -26,6 +26,9 @@ class GraphNodes:
         """Get the email types."""
         types = ["order", "question", "complaint", "declaration"]
 
+        if state["email_type"] in types:
+            return state["email_type"]
+
         return random.choice(types)
 
     def generate_declaration(self, state: FakeEmailState, config):
@@ -142,7 +145,7 @@ Use the following HTML template to generate the HTML version of the customs decl
         prompt = HumanMessage(
             content=f"""Convert the draft email to HTML and return it as a function call.\n
 Your writing style should be {random.choice(writing_style)}.
-You can also add some history, context and custom HTMLformatting to the email to make it look more realistic.
+You can also add some history, context and custom HTML formatting to the email to make it look more realistic.
             """
         )
         messages.append(prompt)
