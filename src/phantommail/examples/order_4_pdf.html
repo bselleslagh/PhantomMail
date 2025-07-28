@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordre de Transport</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #000;
+            font-size: 12px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .logo-section {
+            width: 45%;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .tagline {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .order-box {
+            border: 2px solid #000;
+            padding: 10px;
+            width: 45%;
+            text-align: center;
+        }
+        .order-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .order-number {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .order-date {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .contact-section {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .contact-box, .transporter-box {
+            border: 1px solid #000;
+            padding: 10px;
+            width: 45%;
+        }
+        .box-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .confirmation-text {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .address-section {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .address-box {
+            border: 1px solid #000;
+            padding: 10px;
+            width: 45%;
+        }
+        .merchandise-section {
+            margin: 20px 0;
+        }
+        .merchandise-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        .total-row {
+            font-weight: bold;
+        }
+        .vehicle-section {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .references-section {
+            margin: 20px 0;
+        }
+        .price-section {
+            margin: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .fill-section {
+            margin: 20px 0;
+        }
+        .fill-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .fill-fields {
+            display: flex;
+            justify-content: space-between;
+        }
+        .instructions-section {
+            margin: 20px 0;
+        }
+        .instructions-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .rdv-text {
+            font-style: italic;
+            font-weight: bold;
+        }
+        .instructions-box {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">GLOBAL</div>
+            <div class="tagline">INNOVATION POUR MIEUX TRANSPORTER</div>
+        </div>
+        <div class="order-box">
+            <div class="order-title">ORDRE DE TRANSPORT</div>
+            <div class="order-number">N° TRN-B7892 3400</div>
+            <div class="order-date">DATE : 15/08/2025</div>
+        </div>
+    </div>
+
+    <div class="contact-section">
+        <div class="contact-box">
+            <div class="box-title">Contact :</div>
+            <div><strong>Pierre ALEXANDRE</strong></div>
+            <div>Ligne directe : 05.23.84.76.92</div>
+            <div>Email : pierre.alexandre@global-logistics.com</div>
+        </div>
+        <div class="transporter-box">
+            <div class="box-title">Transporteur :</div>
+            <div><strong>EURO Express</strong></div>
+            <div>Industrieweg 15</div>
+            <div>2800 MECHELEN</div>
+            <div>BELGIQUE</div>
+            <div>Tél : 3287654321</div>
+        </div>
+    </div>
+
+    <div class="confirmation-text">
+        Nous confirmons vous mandater pour le transport suivant :
+    </div>
+
+    <div class="address-section">
+        <div class="address-box">
+            <div class="box-title">Adresse d'enlèvement :</div>
+            <div><strong>GLOBAL LOGISTICS</strong></div>
+            <div>12 AVENUE SAINT MARTIN</div>
+            <div>87200 BELLEVILLE MANUFACTURING</div>
+        </div>
+        <div class="address-box">
+            <div class="box-title">Adresse de livraison :</div>
+            <div><strong>JOHNSON EXPORTS</strong></div>
+            <div>78 WEST HARBOR STREET</div>
+            <div>BRISTOL</div>
+            <div>BS2 4MP DUNDEE</div>
+            <div>GB</div>
+        </div>
+    </div>
+
+    <div class="merchandise-section">
+        <div class="merchandise-title">Description de la marchandise :</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Emballage</th>
+                    <th>Description</th>
+                    <th>Volume</th>
+                    <th>Quantité</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>THERMAL</td>
+                    <td>135 x 135 x 275 NG</td>
+                    <td>4.52 m3</td>
+                    <td>18.00</td>
+                </tr>
+                <tr>
+                    <td>STD</td>
+                    <td>185 x 135 x 265 NG</td>
+                    <td>6.21 m3</td>
+                    <td>4.00</td>
+                </tr>
+                <tr>
+                    <td>COMPACT</td>
+                    <td>25 colis 28 x 28.5 x 12</td>
+                    <td>0.19 m3</td>
+                    <td>22.00</td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2">Total m3</td>
+                    <td>91.15 m3</td>
+                    <td></td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2">Total kg</td>
+                    <td>2 712.83 kg</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="vehicle-section">
+        <div><strong>Type de véhicule :</strong> Semi 95 m²</div>
+        <div><strong>Hauteur sous barres :</strong> 2,85 m minimum</div>
+    </div>
+
+    <div class="references-section">
+        <div><strong>Références :</strong></div>
+        <div>N° de Commande GLOBAL TRN-B7892 3400</div>
+        <div>N° de Commande Destinataire : 987654321</div>
+        <div>Téléphone Destinataire 0052 15874 923156 &nbsp;&nbsp;&nbsp;&nbsp; Fax Destinataire :</div>
+        <div>Contact Destinataire : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mail Destinataire :</div>
+    </div>
+
+    <div class="price-section">
+        Prix convenu : &nbsp;&nbsp;&nbsp;&nbsp; 3820,00 €
+    </div>
+
+    <div class="fill-section">
+        <div class="fill-title">A remplir par le transporteur :</div>
+        <div class="fill-fields">
+            <div>Date d'enlèvement &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date :</div>
+        </div>
+        <div style="margin-top: 10px;">
+            <div>Date de livraison : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Signature :</div>
+        </div>
+    </div>
+
+    <div class="instructions-section">
+        <div class="instructions-title">Instructions de livraison : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="rdv-text">RDV de chargement obligatoire</span></div>
+        <div class="instructions-box">
+            **Please refer to GLOBAL LOGISTICS Delivery Instructions attached**<br>
+            DELIVERY BEFORE 16:00<br>
+            CONTACT MICHAEL 0052 1587 492384
+        </div>
+    </div>
+</body>
+</html>

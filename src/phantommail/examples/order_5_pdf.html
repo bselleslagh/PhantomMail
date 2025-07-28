@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Routing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #000;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .logo-section {
+            width: 60%;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e67e22;
+        }
+        .tagline {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+        .contact-info {
+            width: 35%;
+            text-align: right;
+            font-size: 11px;
+        }
+        .routing-header {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            border: 1px solid #000;
+            background-color: #f8f8f8;
+        }
+        .routing-left, .routing-right {
+            padding: 10px;
+            width: 48%;
+        }
+        .routing-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .routing-number {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .delivery-section {
+            border: 1px solid #000;
+            margin: 20px 0;
+            padding: 15px;
+        }
+        .delivery-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .delivery-address {
+            width: 45%;
+        }
+        .loading-details {
+            margin: 15px 0;
+        }
+        .instructions-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .pricing-table th, .pricing-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        .pricing-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #e8e8e8;
+        }
+        .important-section {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .important-title {
+            font-weight: bold;
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            margin: -15px -15px 10px -15px;
+        }
+        .safety-section {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .safety-icons {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+            align-items: center;
+        }
+        .safety-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        .contact-box {
+            border: 2px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            background-color: #e3f2fd;
+        }
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+            font-size: 10px;
+            color: #666;
+        }
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 4px;
+        }
+        .red-text {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">steelworks</div>
+            <div class="tagline">advanced metal solutions</div>
+        </div>
+        <div class="contact-info">
+            <strong>MARTINEZ CARLOS</strong><br>
+            carlos.martinez@steelworks.com<br>
+            Tel +34 91 456 7890
+        </div>
+    </div>
+
+    <div class="routing-header">
+        <div class="routing-left">
+            <div><strong>LADEN</strong> 12/09/2025</div>
+            <div><strong>LOSSEN</strong> 15/09/2025</div>
+            <div><strong>GEWICHT</strong> 13457 Kg</div>
+        </div>
+        <div style="text-align: center; width: 40%;">
+            <div class="routing-title">ROUTING</div>
+            <div class="routing-number">SW-847521</div>
+        </div>
+        <div class="routing-right">
+            <div><strong>NUMMERPLAAT</strong> *</div>
+            <div><strong>OPLEGGER</strong> *TRS*</div>
+            <div><strong>MUNT</strong> EUR</div>
+        </div>
+    </div>
+
+    <div class="delivery-section">
+        <div class="delivery-header">
+            <div class="delivery-address">
+                <strong>Lever adressen</strong><br>
+                <strong>1 KRUPP STEEL D5</strong><br>
+                INDUSTRIEPARK-STR.12<br>
+                45327 ESSEN<br>
+                DEUTSCHLAND<br><br>
+                <strong>Bruto:</strong> 13457 Kg <strong>Netto:</strong> 13398 Kg<br>
+                <strong>Laadmt</strong> 14.20m <strong>Laadbr</strong> 2.55m<br>
+                <strong>MA-VRIJ.:</strong> 08:00 u - 18:00 u (later na afspraak)
+            </div>
+            <div class="delivery-address">
+                <strong>Laadplaats</strong><br>
+                <strong>Steelworks Manufacturing BV</strong><br>
+                METALSTRAAT 45<br>
+                9200 DENDERMONDE<br>
+                BELGIE / BELGIQUE<br><br>
+                <strong>Delivered At Place</strong><br>
+                <strong>Openingsuren:</strong> zie onder per afdeling
+            </div>
+            <div style="width: 10%; text-align: right;">
+                <strong>Prijs</strong><br>
+                <strong>1285.00</strong>
+            </div>
+        </div>
+
+        <div class="loading-details">
+            <strong>INSTRUCTIES:</strong><br>
+            Heen vol - voorladen<br>
+            koppelen 12/9 vanaf 14:00
+        </div>
+    </div>
+
+    <div class="instructions-box">
+        <div class="red-text">!!OPGELET!! BOVENSTAANDE VOLGORDE IS DE VOLGORDE VAN LADEN.</div>
+        <div class="red-text">M.A.W. DE ROUTE VOOR HET LOSSEN START OP HET LAATST OPGEGEVEN LEVERADRES.</div>
+    </div>
+
+    <table class="pricing-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Basis prijs</th>
+                <th>Diesel</th>
+                <th>Wachturen</th>
+                <th>Andere kosten</th>
+                <th>Totaal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Heen</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><em>Sub totaal</em></td>
+                <td>1320.00</td>
+                <td>-35.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>1285.00</td>
+            </tr>
+            <tr>
+                <td><strong>Terug</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><em>Sub totaal</em></td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+            </tr>
+            <tr class="total-row">
+                <td><strong>Totaal heen en terug</strong></td>
+                <td>1320.00</td>
+                <td>-35.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>1285.00</td>
+            </tr>
+            <tr class="total-row">
+                <td><strong>Totaal</strong></td>
+                <td colspan="4"></td>
+                <td><strong>1285.00</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="important-section">
+        <div class="important-title">B E L A N G R I J K - INSTRUCTIES STEELWORKS MANUFACTURING</div>
+        
+        <div style="margin: 15px 0;">
+            <strong>Laden van Staalplaten (Transport richting ThyssenKrupp en ArcelorMittal)</strong>
+        </div>
+        
+        <div>
+            <strong>Laad- en losuren in Dendermonde:</strong> (tenzij anders afgesproken)<br>
+            - Maandag – vrijdag Tussen 08:00 - 20:00 (aanmelden vóór 19:00 bij receptie)
+        </div>
+        
+        <div style="margin: 10px 0;">
+            <strong>Enkel aanhangers met:</strong>
+            <ul>
+                <li>Openschuivend dak niet noodzakelijk (tenzij anders afgesproken)</li>
+                <li>De nodige spanbanden volgens type lading</li>
+                <li>De nodige anti-slipmatten <span class="highlight">(afmetingen: 2.8mx0.6m)</span></li>
+                <li>Beschermingshoeken</li>
+            </ul>
+        </div>
+
+        <div style="margin: 15px 0;">
+            <strong>Laden en lossen van Profielen (Transport richting ArcelorMittal en Tata Steel)</strong>
+        </div>
+        
+        <div>
+            <strong>Laden en lossen in Dendermonde:</strong> (tenzij anders afgesproken)<br>
+            - Maandag – vrijdag Tussen 07:00 - 21:00 (aanmelden vóór 19:00 bij receptie)
+        </div>
+        
+        <div style="margin: 10px 0;">
+            <strong>Enkel aanhangers met:</strong>
+            <ul>
+                <li>Openschuivend dak in 1 richting (tenzij anders afgesproken)</li>
+                <li>De nodige spanbanden volgens type lading</li>
+                <li>De nodige anti-slipmatten</li>
+                <li>Beschermingshoeken</li>
+            </ul>
+        </div>
+
+        <div class="red-text" style="margin: 15px 0;">
+            Indien de transporteur niet de juiste anti-slipmatten bij zich heeft, zal er niet geladen worden! Steelworks heeft een 
+            "kleine" buffer anti-slipmatten ter beschikking en zal deze UITZONDERLIJK ter beschikking stellen en factureren aan de transporteur 
+            wanneer ze geen bij zich hebben. Wanneer de "kleine" buffer van Steelworks uitgeput is dan wordt de vrachtwagen niet geladen op kosten van 
+            de transporteur.
+        </div>
+    </div>
+
+    <div class="important-section">
+        <strong>Laden van buizen</strong><br>
+        <strong>Laden in Dendermonde:</strong> (tenzij anders/timeslot afgesproken)<br>
+        - Maandag – Donderdag Tussen 09:00 - 17:00 (aanmelden vóór 15:00 bij receptie)<br>
+        - Vrijdag Tussen 09:00 - 16:00 (aanmelden vóór 14:00 bij receptie)
+        
+        <div style="margin: 10px 0;">
+            <strong>Enkel aanhangers met:</strong>
+            <ul>
+                <li>Openschuivend dak in 2 richtingen (tenzij anders afgesproken)</li>
+                <li>De nodige spanbanden volgens type lading</li>
+                <li>De nodige anti-slipmatten</li>
+                <li>Beschermingshoeken</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="safety-section">
+        <strong>Algemene veiligheidsafspraken</strong><br>
+        <strong>Persoonlijke beschermingsmiddelen:</strong> Bij het aanmelden aan de receptie moet de vrachtwagenbestuurder zijn 
+        PBM's tonen aan de verantwoordelijke in de receptie.
+        
+        <div class="safety-icons">
+            <div class="safety-icon">🦺</div>
+            <div class="safety-icon">🥽</div>
+            <div class="safety-icon">👢</div>
+            <div class="safety-icon">⛑️</div>
+        </div>
+        
+        <ul>
+            <li>Fluohesje</li>
+            <li>Veiligheidsschoenen</li>
+            <li>Veiligheidsbril</li>
+            <li>Veiligheidshelm</li>
+        </ul>
+        
+        <div style="margin: 10px 0;">
+            De vrachtwagenbestuurder dient steeds de interne veiligheidsvoorschriften te volgen. Als deze niet 
+            gerespecteerd worden zal de toegang tot de site geweigerd worden!
+        </div>
+    </div>
+
+    <div class="important-section">
+        <strong>Algemene afspraken</strong>
+        <ul>
+            <li>Ladingzekering moet steeds voldoen aan de KB's van 07/04/2007 en 27/04/2007 en de voorgeschreven ladingsinstructies.</li>
+            <li>De vrachtwagenbestuurder controleert steeds voor het vertrek de ontvangen documenten, de uiterlijke staat van de goederen en de verpakking.</li>
+            <li>De vrachtwagenbestuurder is tijdens het transport steeds bereikbaar per mobiel of via de transportfirma.</li>
+            <li>Er mag nooit bijgeladen worden tijdens het transport zonder voorafgaande afspraak met de transportmanager van Steelworks.</li>
+            <li>De vracht mag niet geladen of gelost worden bij vochtig weer. Elke vorm van vocht (sneeuw, regen, condens, etc.…) moet vermeden worden.</li>
+            <li>Schade aan goederen moet steeds onmiddellijk op de CMR gemeld worden.</li>
+            <li>CMR en ondertekende paklijsten dienen samen met de factuur overgemaakt te worden aan onze boekhouding; invoices@steelworks.com</li>
+        </ul>
+    </div>
+
+    <div class="contact-box">
+        <strong>Bij problemen en/of vragen contact opnemen met MARTINEZ CARLOS</strong><br>
+        <strong>Transportmanager Steelworks BV</strong><br>
+        <strong>Tel. +34 91 456 7890, E-mail: carlos.martinez@steelworks.com</strong>
+    </div>
+
+    <div class="footer">
+        <strong>Steelworks Manufacturing BV</strong><br>
+        Metalstraat 45 BE-9200 DENDERMONDE<br>
+        Ondernemingsnr. 0512.456.789 BTW / TVA / VAT: BE 0512.456.789<br>
+        Tel. +32 (0)52 45 67 89<br>
+        www.steelworks.com
+    </div>
+</body>
+</html>

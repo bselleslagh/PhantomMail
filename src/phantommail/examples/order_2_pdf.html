@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Order</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.3;
+            margin: 20px;
+            color: #000;
+            background: white;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        .qr-code {
+            width: 50px;
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="white"/><rect x="0" y="0" width="10" height="10" fill="black"/><rect x="20" y="0" width="10" height="10" fill="black"/><rect x="40" y="0" width="10" height="10" fill="black"/><rect x="0" y="20" width="10" height="10" fill="black"/><rect x="40" y="20" width="10" height="10" fill="black"/><rect x="20" y="40" width="10" height="10" fill="black"/></svg>') no-repeat;
+            background-size: contain;
+        }
+        
+        .logo-section {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .company-tagline {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 2px 0;
+            margin: 5px 50px;
+        }
+        
+        .barcode {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        
+        .barcode-lines {
+            font-size: 20px;
+            letter-spacing: 1px;
+            line-height: 0.8;
+        }
+        
+        .barcode-number {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .left-column {
+            flex: 1;
+        }
+        
+        .right-column {
+            flex: 1;
+            border: 2px solid #000;
+            padding: 10px;
+        }
+        
+        .transport-header {
+            background: #000;
+            color: white;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .company-info {
+            margin-bottom: 15px;
+        }
+        
+        .address-block {
+            margin: 15px 0;
+        }
+        
+        .delivery-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10px;
+        }
+        
+        .delivery-table td, .delivery-table th {
+            border: 1px solid #000;
+            padding: 3px;
+            text-align: left;
+        }
+        
+        .delivery-table th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .delivery-hours {
+            width: 30%;
+        }
+        
+        .restrictions {
+            width: 70%;
+        }
+        
+        .footer-info {
+            margin-top: 30px;
+            font-size: 9px;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+        }
+        
+        .footer-columns {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+        
+        .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 10px;
+        }
+        
+        .totals-table td {
+            border: 1px solid #000;
+            padding: 3px;
+            text-align: center;
+        }
+        
+        .totals-header {
+            text-align: center;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="qr-code"></div>
+        <div class="logo-section">
+            <div class="logo">BMT</div>
+            <div>BRISTOL-MANCHESTER TRANSPORT</div>
+            <div class="company-tagline">PAPER- UND KUNSTSTOFFVERPACKUNGEN</div>
+        </div>
+        <div></div>
+    </div>
+    
+    <div class="barcode">
+        <div class="barcode-lines">||||| |||| | || ||| || || ||| | |||| |||||</div>
+        <div class="barcode-number">TXME290847</div>
+    </div>
+    
+    <div class="main-content">
+        <div class="left-column">
+            <div class="company-info">
+                <strong>BRISTOL-MANCHESTER TRANSPORT KG</strong> - Postfach 82 - G-51463 Bristol<br><br>
+                
+                <strong>WDQ CVBA</strong><br><br>
+                
+                Riverside Way 8<br><br>
+                G - 6420 Manchester
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <strong>Remarks .:</strong> ref.WA873945782<br><br>
+                
+                <strong>Pos. 1 / Delivery Note No.(s).:</strong> 642879
+            </div>
+        </div>
+        
+        <div class="right-column">
+            <div class="transport-header">TRANSPORT . ORDER</div>
+            
+            <div>
+                <strong>Tour Number ..:</strong> 7.42.638<br>
+                <strong>Transp. Type ..:</strong> FTL<br><br>
+                
+                <strong>Loading Date ..:</strong> 22.07.2025<br>
+                <strong>Loading Point :</strong><br>
+                Industrial-Park-Str. 12<br>
+                G-51463 Bristol<br><br>
+                
+                <strong>Phone ........:</strong> +44 (7382) 64-2847<br>
+                <strong>Email ........:</strong><br>
+                helen.foster@bristol-manchester.com<br><br>
+                
+                <strong>Page .........:</strong> 1
+            </div>
+        </div>
+    </div>
+    
+    <table class="delivery-table">
+        <tr>
+            <th>Point of Delivery</th>
+            <th>Deliv. Date(FIX):</th>
+            <th>Weight (gr.) :</th>
+        </tr>
+        <tr>
+            <td>BRISTOL DISTRIBUTION CENTRE WESTRIM</td>
+            <td>28.07.2025</td>
+            <td>23.847</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Delivery Hour:</strong> 11:00</td>
+            <td><strong>Weight .:</strong> 23.588</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Incoterm:DAP</td>
+            <td><strong>Pal. Places .:</strong> 41,8</td>
+        </tr>
+        <tr>
+            <td>Westside Industrial Road</td>
+            <td><strong>Notification Reference:</strong></td>
+            <td><strong>Load. Meter .:</strong> 18,3</td>
+        </tr>
+        <tr>
+            <td>GBR WS73 6NN</td>
+            <td>WA873945782</td>
+            <td><strong>Loading Meter .:</strong> 67,92</td>
+        </tr>
+        <tr>
+            <td>Westrim</td>
+            <td></td>
+            <td><strong>No. of Cases :</strong> 3.781</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Customer Order Number:</strong></td>
+            <td><strong>EURO-Pal. Exchange:</strong> No</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>LM294753847291</td>
+            <td><strong>Pallet Type 1:</strong> CHEP</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><strong>Total ......:</strong> 41</td>
+        </tr>
+    </table>
+    
+    <table class="delivery-table">
+        <tr>
+            <th class="delivery-hours">Delivery Hours</th>
+            <th class="restrictions">Delivery Restrict. / Service Types</th>
+        </tr>
+        <tr>
+            <td>Mo</td>
+            <td>Bei einer verspäteten Zustellung von</td>
+        </tr>
+        <tr>
+            <td>Tu</td>
+            <td>mehr als 1 Stunde fällt eine Strafe</td>
+        </tr>
+        <tr>
+            <td>We</td>
+            <td>von 148 Euro an, WENN Bristol-Manchester</td>
+        </tr>
+        <tr>
+            <td>Th</td>
+            <td>r nicht VORHER informiert wurde!</td>
+        </tr>
+        <tr>
+            <td>Fr</td>
+            <td></td>
+        </tr>
+    </table>
+    
+    <div style="text-align: right; margin-top: 20px;">
+        <strong>Total Pallets: 41</strong>
+    </div>
+    
+    <div class="totals-header">
+        <strong>Weight (gr.) Pal. Ppl. Bxs.</strong>
+    </div>
+    
+    <table class="totals-table">
+        <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>23.847</strong></td>
+            <td><strong>41</strong></td>
+            <td><strong>41,8</strong></td>
+            <td><strong>3.781</strong></td>
+        </tr>
+    </table>
+    
+    <div style="margin-top: 20px;">
+        <strong>Irregularities (missing amounts, dammage or delays etc.)</strong><br>
+        <strong>must be immediately communicated to the customer.</strong>
+    </div>
+    
+    <div class="footer-info">
+        <div class="footer-columns">
+            <div class="footer-column">
+                <strong>BRISTOL-MANCHESTER TRANSPORT KG</strong><br>
+                <br>
+                Queen Elizabeth Street 47<br>
+                G-51463 Bristol
+            </div>
+            <div class="footer-column">
+                <strong>Postal address:</strong><br>
+                <br>
+                Postfach 82<br>
+                51463 Bristol
+            </div>
+            <div class="footer-column">
+                <strong>Telephone:</strong> +44 6374/73-0<br>
+                <strong>Fax:</strong> +44 6374/73-1847<br>
+                <br>
+                www.bristol-manchester.com<br>
+                email@bristol-manchester.com
+            </div>
+            <div class="footer-column">
+                <strong>VAT REG.Nr</strong> GB847362947<br>
+                <strong>GLN-Nr.</strong> 7849274649847<br>
+                <strong>Tax-Nr. .:</strong> 73/284/69382<br>
+                <br>
+                <strong>Handelsregister:</strong><br>
+                Amtsgericht Wittlich HRA 67382
+            </div>
+        </div>
+    </div>
+</body>
+</html>
