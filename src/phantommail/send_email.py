@@ -5,7 +5,10 @@ import os
 
 import resend
 
+from phantommail.logger import setup_logger
 from phantommail.models.email import FullEmail
+
+logger = setup_logger(__name__)
 
 recipient_email = "ben@vectrix.ai"
 
@@ -22,12 +25,13 @@ def send(email: FullEmail) -> str:
         str: A message indicating that the email was sent successfully.
 
     """
+    logger.info(f"Sending email to {email.to} with subject: {email.subject}")
     resend.api_key = os.environ["RESEND_API_KEY"]
     params: resend.Emails.SendParams = {
         "from": email.sender,
         "to": email.to,
         "subject": email.subject,
-        "html": email.body,
+        "html": email.body_html,
         "cc": email.cc,
         "bcc": email.bcc,
     }
@@ -41,6 +45,8 @@ def send(email: FullEmail) -> str:
         ]
     try:
         email = resend.Emails.send(params)
-        return f"Email sent successfully! ID: {email}"
+        logger.info("Email sent successfully! ")
+        return "Email sent successfully!"
     except Exception as e:
+        logger.error(f"Error sending email: {e}")
         return f"Error sending email: {e}"

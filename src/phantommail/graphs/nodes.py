@@ -1,6 +1,8 @@
+import json
 import random
 from importlib import resources
 
+from google import genai
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from pydantic import BaseModel
@@ -11,8 +13,11 @@ from phantommail.fakers.question import TransportQuestionGenerator
 from phantommail.fakers.transport import TransportOrderGenerator
 from phantommail.graphs.state import FakeEmailState
 from phantommail.helpers.html_to_pdf import create_pdf
+from phantommail.logger import setup_logger
 from phantommail.models.email import Email, FullEmail
 from phantommail.send_email import send
+
+logger = setup_logger(__name__)
 
 
 class GraphNodes:
@@ -20,18 +25,18 @@ class GraphNodes:
 
     def __init__(self):
         """Initialize the graph nodes."""
-        self.llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-001", temperature=0.5)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5)
 
     def email_types(self, state: FakeEmailState, config):
         """Get the email types."""
         types = ["order", "question", "complaint", "declaration"]
 
-        if state["email_type"] in types:
+        if "email_type" in state and state["email_type"] in types:
             return state["email_type"]
 
         return random.choice(types)
 
-    def generate_declaration(self, state: FakeEmailState, config):
+    async def generate_declaration(self, state: FakeEmailState, config):
         """Generate a fake customs declaration email."""
         declaration_generator = DeclarationGenerator()
         declaration = declaration_generator.generate_declaration()
@@ -71,7 +76,7 @@ Use the following HTML template to generate the HTML version of the customs decl
 
         return {"messages": messages, "attachments": [pdf]}
 
-    def generate_question(self, state: FakeEmailState, config):
+    async def generate_question(self, state: FakeEmailState, config):
         """Generate a fake question email."""
         question_generator = TransportQuestionGenerator()
         question = question_generator.generate_question()
@@ -92,7 +97,7 @@ Use the following HTML template to generate the HTML version of the customs decl
 
         return {"messages": messages}
 
-    def generate_complaint(self, state: FakeEmailState, config):
+    async def generate_complaint(self, state: FakeEmailState, config):
         """Generate a fake complaint email."""
         complaint_generator = FakeComplaint()
         complaint = complaint_generator.generate_complaint()
@@ -112,59 +117,76 @@ Use the following HTML template to generate the HTML version of the customs decl
 
         return {"messages": messages}
 
-    def generate_order(self, state: FakeEmailState, config):
+    async def generate_order(self, state: FakeEmailState, config):
         """Generate a fake transport order email."""
         transport_order_generator = TransportOrderGenerator()
         transport_order = transport_order_generator.generate().model_dump()
 
-        instruction = SystemMessage(
-            content="You are an assistant that generates fake emails. The emails are meant for Vectrix Logistcs NV"
+        # Read HTML templates
+        email_html = (
+            resources.files("phantommail.examples")
+            .joinpath("order_2_email.html")
+            .read_text()
         )
 
-        prompt = HumanMessage(
-            content=f"""Generate a fake transport order email based on the following data. Write all details in the body.\n
+        pdf_html = (
+            resources.files("phantommail.examples")
+            .joinpath("order_2_pdf.html")
+            .read_text()
+        )
+
+        instruction = "You are an assistant that generates fake emails. The emails are meant for VecTrans NV"
+
+        prompt = f"""Generate a fake transport order email based on the following data. Write all details in the body.\n
         Transport details:\n
         {transport_order}
+
+        Create an email body and attachment in the following style:
+        <body_html>
+        {email_html}
+        </body_html>
+
+        <attachment_html>
+        {pdf_html}
+        </attachment_html>
         """
+
+        client = genai.Client(
+            vertexai=True,
+            project="vectrix-401014",
+            location="global",
         )
-        messages = [instruction, prompt]
-        response = self.llm.invoke(messages)
-        messages.append(response)
 
-        return {"messages": messages}
-
-    def body_to_html(self, state: FakeEmailState, config):
-        """Convert the body of the email to HTML."""
-        llm_with_tools = self.llm.with_structured_output(Email)
-        messages = state["messages"]
-        writing_style = [
-            "fast and with spelling mistakes",
-            "detailed and polite",
-            "in the oringal language of the sender",
-        ]
-        prompt = HumanMessage(
-            content=f"""Convert the draft email to HTML and return it as a function call.\n
-Your writing style should be {random.choice(writing_style)}.
-You can also add some history, context and custom HTML formatting to the email to make it look more realistic.
-            """
+        response = await client.aio.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=[instruction, prompt],
+            config={
+                "response_mime_type": "application/json",
+                "response_schema": Email,
+                "temperature": 0,
+            },
         )
-        messages.append(prompt)
-        response = llm_with_tools.invoke(messages)
+        response = json.loads(response.text)
+        pdf = create_pdf(response["attachment_html"])
 
-        messages = [prompt, AIMessage(content=response.body)]
+        logger.info(f"Response from model: {response}")
 
-        return {"messages": messages, "email": response}
+        return {
+            "attachments": [pdf],
+            "email": response["body_html"],
+            "subject": response["subject"],
+        }
 
-    def send_email(self, state: FakeEmailState, config):
+    async def send_email(self, state: FakeEmailState, config):
         """Send an email."""
-        response = state["email"]
         email = FullEmail(
             sender=config["configurable"].get("sender"),
             to=state["recipients"],
             attachments=state.get("attachments", []),
-            **response.model_dump(),
+            body_html=state["email"],
+            subject=state["subject"],
         )
 
-        response = send(email)
+        send(email)
 
         return {"messages": state["messages"]}

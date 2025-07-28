@@ -12,3 +12,4 @@ class FakeEmailState(TypedDict):
     messages: Annotated[list, add_messages]
     attachments: Annotated[list[str], "The attachments of the email"]
     email_type: Annotated[str, "The type of email to generate"]
+    subject: Annotated[str, "The subject of the email"]

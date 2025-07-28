@@ -7,7 +7,8 @@ class Email(BaseModel):
     """An email."""
 
     subject: str
-    body: str
+    body_html: str
+    attachment_html: str | None = None
 
 
 class FullEmail(Email):
