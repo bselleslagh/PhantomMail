@@ -25,7 +25,7 @@ class GraphNodes:
 
     def __init__(self):
         """Initialize the graph nodes."""
-        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro", temperature=0.5)
 
     def email_types(self, state: FakeEmailState, config):
         """Get the email types."""
@@ -66,7 +66,7 @@ Use the following HTML template to generate the HTML version of the customs decl
 
         messages = [instruction, prompt]
         response = llm_with_tools.invoke(messages)
-        pdf = create_pdf(response.html)
+        pdf = await create_pdf(response.html)
         messages.append(AIMessage(content=response.html))
         messages.append(
             HumanMessage(
@@ -122,22 +122,46 @@ Use the following HTML template to generate the HTML version of the customs decl
         transport_order_generator = TransportOrderGenerator()
         transport_order = transport_order_generator.generate().model_dump()
 
+        logger.info(f"Generated transport order: {transport_order}")
+
+        # Randomly select an order template (1-5)
+        order_number = random.randint(1, 5)
+        logger.info(f"Selected order template: order_{order_number}")
+
         # Read HTML templates
         email_html = (
             resources.files("phantommail.examples")
-            .joinpath("order_2_email.html")
+            .joinpath(f"order_{order_number}_email.html")
             .read_text()
         )
 
-        pdf_html = (
-            resources.files("phantommail.examples")
-            .joinpath("order_2_pdf.html")
-            .read_text()
-        )
+        # Check if PDF template exists for this order
+        if order_number == 1:
+            # Order 1 doesn't have a PDF template
+            pdf_html = "no attachment"
+        else:
+            pdf_html = (
+                resources.files("phantommail.examples")
+                .joinpath(f"order_{order_number}_pdf.html")
+                .read_text()
+            )
 
-        instruction = "You are an assistant that generates fake emails. The emails are meant for VecTrans NV"
+        if pdf_html == "no attachment":
+            prompt = f"""Generate a fake transport order email based on the following data. Just update the example email with the new transport details.\n
+        Transport details:\n
+        {transport_order}
 
-        prompt = f"""Generate a fake transport order email based on the following data. Write all details in the body.\n
+        Create an email body in the following style:
+        <body_html>
+        {email_html}
+        </body_html>
+
+        <attachment_html>
+        no attachment
+        </attachment_html>
+        """
+        else:
+            prompt = f"""Generate a fake transport order email based on the following data. Just update the example email and the attachment with the new transport details.\n
         Transport details:\n
         {transport_order}
 
@@ -159,7 +183,7 @@ Use the following HTML template to generate the HTML version of the customs decl
 
         response = await client.aio.models.generate_content(
             model="gemini-2.5-flash",
-            contents=[instruction, prompt],
+            contents=[prompt],
             config={
                 "response_mime_type": "application/json",
                 "response_schema": Email,
@@ -167,12 +191,18 @@ Use the following HTML template to generate the HTML version of the customs decl
             },
         )
         response = json.loads(response.text)
-        pdf = create_pdf(response["attachment_html"])
+
+        # Check if we need to create a PDF attachment based on order number
+        if order_number != 1:
+            pdf = await create_pdf(response["attachment_html"])
+            attachments = [pdf]
+        else:
+            attachments = []
 
         logger.info(f"Response from model: {response}")
 
         return {
-            "attachments": [pdf],
+            "attachments": attachments,
             "email": response["body_html"],
             "subject": response["subject"],
         }
