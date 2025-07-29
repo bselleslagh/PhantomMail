@@ -1,5 +1,6 @@
 import pytest
 from faker import Faker
+from datetime import date, timedelta
 
 from phantommail.fakers.transport import TransportOrderGenerator
 from phantommail.models.transport import Address, Client, TransportOrder
@@ -56,12 +57,25 @@ def test_generate_transport_order(generator):
     assert isinstance(order.goods, Goods)
     assert isinstance(order.pickup_address, Address)
     assert isinstance(order.delivery_address, Address)
-    assert isinstance(order.loading_stops, list)
-    assert isinstance(order.unloading_stops, list)
-    assert all(isinstance(stop, Address) for stop in order.loading_stops)
-    assert all(isinstance(stop, Address) for stop in order.unloading_stops)
-    assert len(order.loading_stops) <= 3
-    assert len(order.unloading_stops) <= 3
+    assert isinstance(order.intermediate_loading_stops, list)
+    assert isinstance(order.intermediate_unloading_stops, list)
+    assert all(isinstance(stop, Address) for stop in order.intermediate_loading_stops)
+    assert all(isinstance(stop, Address) for stop in order.intermediate_unloading_stops)
+    assert len(order.intermediate_loading_stops) <= 1
+    assert len(order.intermediate_unloading_stops) <= 1
+    
+    # Test the new date fields
+    assert isinstance(order.loading_date, date)
+    assert isinstance(order.unloading_date, date)
+    
+    # Loading date should be between tomorrow and 10 days from now
+    tomorrow = date.today() + timedelta(days=1)
+    ten_days_later = date.today() + timedelta(days=10)
+    assert tomorrow <= order.loading_date <= ten_days_later
+    
+    # Unloading date should be after loading date
+    assert order.unloading_date > order.loading_date
+    assert order.unloading_date <= order.loading_date + timedelta(days=5)
 
 
 def test_different_countries_for_pickup_delivery(generator):

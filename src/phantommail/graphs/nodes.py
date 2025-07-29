@@ -1,10 +1,9 @@
-import json
 import random
 from importlib import resources
 
-from google import genai
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_vertexai import ChatVertexAI
 from pydantic import BaseModel
 
 from phantommail.fakers.complaint import FakeComplaint
@@ -146,10 +145,54 @@ Use the following HTML template to generate the HTML version of the customs decl
                 .read_text()
             )
 
+        # Format transport details for use in prompts
+        transport_details = f"""
+        ## Sender details:
+        - Company name: {transport_order["client"]["company"]}
+        - Contact person: {transport_order["client"]["sender_name"]}
+        - VAT number: {transport_order["client"]["vat_number"]}
+        - Address: {transport_order["client"]["address"]}
+        - City: {transport_order["client"]["city"]}
+        - Postal code: {transport_order["client"]["postal_code"]}
+        - Country: {transport_order["client"]["country"]}
+        - Email: {transport_order["client"]["email"]}
+        - Phone: {transport_order["client"]["phone"]}
+
+        ## Goods details:
+        - Description: {transport_order["goods"]}
+
+        ## Transport dates:
+        - Loading date: {transport_order["loading_date"]}
+        - Unloading date: {transport_order["unloading_date"]}
+
+        ## Pickup address:
+        - Company: {transport_order["pickup_address"]["company"]}
+        - Address: {transport_order["pickup_address"]["address"]}
+        - Country: {transport_order["pickup_address"]["country"]}
+
+        ## Delivery address:
+        - Company: {transport_order["delivery_address"]["company"]}
+        - Address: {transport_order["delivery_address"]["address"]}
+        - Country: {transport_order["delivery_address"]["country"]}
+
+        ## Intermediate Loading stops: {len(transport_order["intermediate_loading_stops"])}
+        {chr(10).join([f"        - {stop['company']}, {stop['address']}, {stop['country']}" for stop in transport_order["intermediate_loading_stops"]])}
+
+        ## Intermediate Unloading stops: {len(transport_order["intermediate_unloading_stops"])}
+        {chr(10).join([f"        - {stop['company']}, {stop['address']}, {stop['country']}" for stop in transport_order["intermediate_unloading_stops"]])}
+        """
+
         if pdf_html == "no attachment":
-            prompt = f"""Generate a fake transport order email based on the following data. Just update the example email with the new transport details.\n
-        Transport details:\n
-        {transport_order}
+            prompt = f"""Generate a fake transport order email based on the following data. 
+        
+        IMPORTANT: Replace ALL references in the HTML template with the actual data provided below:
+        - Replace all company names, addresses, contact details with the sender's information
+        - Replace order numbers, dates, and transport details with realistic values
+        - Replace any placeholder text with appropriate content based on the transport order
+        - Ensure the email appears to come from the sender company listed below
+        
+        Transport details:
+        {transport_details}
 
         Create an email body in the following style:
         <body_html>
@@ -161,9 +204,17 @@ Use the following HTML template to generate the HTML version of the customs decl
         </attachment_html>
         """
         else:
-            prompt = f"""Generate a fake transport order email based on the following data. Just update the example email and the attachment with the new transport details.\n
-        Transport details:\n
-        {transport_order}
+            prompt = f"""Generate a fake transport order email based on the following data.
+        
+        IMPORTANT: Replace ALL references in BOTH the email HTML and attachment HTML templates with the actual data:
+        - Replace all company names, addresses, contact details with the sender's information
+        - Replace order numbers, dates, and transport details with realistic values
+        - Replace any placeholder text with appropriate content based on the transport order
+        - Ensure both the email and PDF attachment appear to come from the sender company
+        - Make sure the attachment contains detailed transport information matching the email
+        
+        Transport details:
+        {transport_details}
 
         Create an email body and attachment in the following style:
         <body_html>
@@ -175,22 +226,20 @@ Use the following HTML template to generate the HTML version of the customs decl
         </attachment_html>
         """
 
-        client = genai.Client(
-            vertexai=True,
-            project="vectrix-401014",
-            location="global",
+        llm = ChatVertexAI(
+            model="gemini-2.5-pro",
+            temperature=0,
         )
 
-        response = await client.aio.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=[prompt],
-            config={
-                "response_mime_type": "application/json",
-                "response_schema": Email,
-                "temperature": 0,
-            },
+        llm_with_tools = llm.with_structured_output(Email)
+
+        response = await llm_with_tools.ainvoke(
+            [
+                HumanMessage(content=prompt),
+            ]
         )
-        response = json.loads(response.text)
+
+        response = response.model_dump()
 
         # Check if we need to create a PDF attachment based on order number
         if order_number != 1:

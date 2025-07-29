@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List
 
 from pydantic import BaseModel
@@ -11,9 +12,13 @@ class Client(BaseModel):
     name: str
     sender_name: str
     company: str
+    vat_number: str
     address: str
+    city: str
+    postal_code: str
     country: str
     email: str
+    phone: str
 
 
 class Address(BaseModel):
@@ -31,5 +36,7 @@ class TransportOrder(BaseModel):
     goods: Goods
     pickup_address: Address
     delivery_address: Address
-    loading_stops: List[Address]
-    unloading_stops: List[Address]
+    intermediate_loading_stops: List[Address]
+    intermediate_unloading_stops: List[Address]
+    loading_date: date
+    unloading_date: date

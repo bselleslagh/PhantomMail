@@ -20,21 +20,28 @@ async def create_pdf(html_content: str) -> str:
             <style>
                 @page {{
                     size: A4;
-                    margin: 2cm;
+                    margin: 0;
                 }}
                 body {{
                     width: 100%;
                     font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 1cm;
+                    box-sizing: border-box;
                 }}
                 table {{
                     width: 100%;
                     margin-bottom: 1em;
                     border-collapse: collapse;
                     font-size: 12px;
+                    table-layout: fixed;
                 }}
                 td, th {{
                     padding: 4px;
                     word-wrap: break-word;
+                    word-break: break-word;
+                    overflow-wrap: break-word;
+                    hyphens: auto;
                 }}
             </style>
         </head>
@@ -56,10 +63,10 @@ async def create_pdf(html_content: str) -> str:
             # Set the HTML content
             await page.set_content(a4_styled_html)
 
-            # Generate PDF with A4 format and 2cm margins
+            # Generate PDF with A4 format and no margins (handled by CSS)
             pdf_bytes = await page.pdf(
                 format="A4",
-                margin={"top": "1cm", "right": "1cm", "bottom": "1cm", "left": "1cm"},
+                margin={"top": "0", "right": "0", "bottom": "0", "left": "0"},
                 print_background=True,  # Include CSS backgrounds
                 scale=1.0,
             )

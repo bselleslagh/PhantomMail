@@ -12,9 +12,11 @@ dependencies = [
     "faker>=35.2.0",
     "google-genai>=1.27.0",
     "langchain-google-genai>=2.0.9",
+    "langchain-google-vertexai>=2.0.27",
     "langchain>=0.3.18",
     "langgraph-cli[inmem]>=0.1.71",
     "langgraph>=0.2.70",
+    "pandas>=2.3.1",
     "playwright>=1.54.0",
     "resend>=2.6.0",
 ]
