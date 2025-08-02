@@ -8,6 +8,7 @@ from phantommail.fakers.complaint import FakeComplaint
 from phantommail.fakers.declaration import DeclarationGenerator
 from phantommail.fakers.price_request import PriceRequestGenerator
 from phantommail.fakers.question import TransportQuestionGenerator
+from phantommail.fakers.random_promotional import RandomPromotionalGenerator
 from phantommail.fakers.transport import TransportOrderGenerator
 from phantommail.fakers.update_order import UpdateOrderGenerator
 from phantommail.fakers.waiting_costs import WaitingCostsGenerator
@@ -39,6 +40,7 @@ class GraphNodes:
             "price_request",
             "waiting_costs",
             "update_order",
+            "random",
         ]
 
         if "email_type" in state and state["email_type"] in types:
@@ -298,6 +300,46 @@ class GraphNodes:
         
         Email content:
         {update_data["formatted_message"]}
+        """
+        )
+
+        messages = [instruction, prompt]
+        llm_with_tools = self.llm.with_structured_output(Email)
+        response = await llm_with_tools.ainvoke(messages)
+        response = response.model_dump()
+
+        return {"email": response["body_html"], "subject": response["subject"]}
+
+    async def generate_random(self, state: FakeEmailState, config):
+        """Generate a random promotional email."""
+        promo_generator = RandomPromotionalGenerator()
+        promo_data = promo_generator.generate_promotional_email()
+
+        instruction = SystemMessage(
+            content="You are an assistant that generates fake promotional emails for logistics and transport services. The emails are meant for Vectrans NV to promote their services."
+        )
+
+        prompt = HumanMessage(
+            content=f"""Generate a professional promotional email based on the following content.
+        
+        IMPORTANT:
+        - Create an engaging promotional email in {promo_data["language"]} language
+        - Use the promotional title as inspiration for the subject line
+        - Include the promotional content, benefit, and call-to-action
+        - Add the validity period prominently
+        - Use professional but engaging marketing language
+        - End with the complete signature provided
+        - Make it look like a real promotional email from a logistics company
+        
+        Promotional content:
+        - Title: {promo_data["promo_title"]}
+        - Content: {promo_data["promo_content"]}
+        - Key benefit: {promo_data["promo_benefit"]}
+        - Call to action: {promo_data["promo_cta"]}
+        - Validity: {promo_data["validity"]}
+        
+        Sender:
+        {promo_data["signature"]}
         """
         )
 
