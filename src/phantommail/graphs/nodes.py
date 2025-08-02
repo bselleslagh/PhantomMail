@@ -9,6 +9,7 @@ from phantommail.fakers.declaration import DeclarationGenerator
 from phantommail.fakers.price_request import PriceRequestGenerator
 from phantommail.fakers.question import TransportQuestionGenerator
 from phantommail.fakers.transport import TransportOrderGenerator
+from phantommail.fakers.update_order import UpdateOrderGenerator
 from phantommail.fakers.waiting_costs import WaitingCostsGenerator
 from phantommail.graphs.state import FakeEmailState
 from phantommail.helpers.html_to_pdf import create_pdf
@@ -25,8 +26,7 @@ class GraphNodes:
     def __init__(self):
         """Initialize the graph nodes."""
         self.llm = ChatVertexAI(
-            model="gemini-2.5-pro",
-            temperature=0.5,
+            model="gemini-2.5-pro", temperature=0.5, project="vectrix-demo"
         )
 
     def email_types(self, state: FakeEmailState, config):
@@ -38,6 +38,7 @@ class GraphNodes:
             "declaration",
             "price_request",
             "waiting_costs",
+            "update_order",
         ]
 
         if "email_type" in state and state["email_type"] in types:
@@ -168,10 +169,11 @@ class GraphNodes:
         )
 
         messages = [instruction, prompt]
-        response = self.llm.invoke(messages)
-        messages.append(response)
+        llm_with_tools = self.llm.with_structured_output(Email)
+        response = await llm_with_tools.ainvoke(messages)
+        response = response.model_dump()
 
-        return {"messages": messages}
+        return {"email": response["body_html"], "subject": response["subject"]}
 
     async def generate_complaint(self, state: FakeEmailState, config):
         """Generate a fake complaint email."""
@@ -270,6 +272,42 @@ class GraphNodes:
 
         return {"email": response["body_html"], "subject": response["subject"]}
 
+    async def generate_update_order(self, state: FakeEmailState, config):
+        """Generate a fake update order question email."""
+        update_order_generator = UpdateOrderGenerator()
+        update_data = update_order_generator.generate_update_order_question()
+
+        instruction = SystemMessage(
+            content="You are an assistant that generates fake update request emails about existing transport orders. The emails are meant for Vectrans NV"
+        )
+
+        prompt = HumanMessage(
+            content=f"""Generate a brief professional email asking for an update about a transport order.
+        
+        IMPORTANT:
+        - Keep the email very brief and direct
+        - Use the exact greeting, question, and signature provided
+        - Write in {update_data["language"]} language
+        - Make the subject reference the order (e.g., "Order {update_data["order_ref"]} - Update request" or "Transport {update_data["tracking_ref"]} - Information needed")
+        - The body should contain only the greeting, question, and signature
+        - Do NOT add extra explanations or context
+        
+        Order references:
+        - Order: {update_data["order_ref"]}
+        - Tracking: {update_data["tracking_ref"]}
+        
+        Email content:
+        {update_data["formatted_message"]}
+        """
+        )
+
+        messages = [instruction, prompt]
+        llm_with_tools = self.llm.with_structured_output(Email)
+        response = await llm_with_tools.ainvoke(messages)
+        response = response.model_dump()
+
+        return {"email": response["body_html"], "subject": response["subject"]}
+
     async def generate_order(self, state: FakeEmailState, config):
         """Generate a fake transport order email."""
         transport_order_generator = TransportOrderGenerator()
@@ -277,8 +315,8 @@ class GraphNodes:
 
         logger.info(f"Generated transport order: {transport_order}")
 
-        # Randomly select an order template (1-5)
-        order_number = random.randint(1, 5)
+        # Randomly select an order template (1-6)
+        order_number = random.randint(1, 6)
         logger.info(f"Selected order template: order_{order_number}")
 
         # Read HTML templates
@@ -289,7 +327,7 @@ class GraphNodes:
         )
 
         # Check if PDF template exists for this order
-        if order_number == 1:
+        if order_number in [1, 6]:  # Order 1 and 6 don't have a PDF template
             # Order 1 doesn't have a PDF template
             pdf_html = "no attachment"
         else:
@@ -300,41 +338,51 @@ class GraphNodes:
             )
 
         # Format transport details for use in prompts
-        transport_details = f"""
-        ## Sender details:
-        - Company name: {transport_order["client"]["company"]}
-        - Contact person: {transport_order["client"]["sender_name"]}
-        - VAT number: {transport_order["client"]["vat_number"]}
-        - Address: {transport_order["client"]["address"]}
-        - City: {transport_order["client"]["city"]}
-        - Postal code: {transport_order["client"]["postal_code"]}
-        - Country: {transport_order["client"]["country"]}
-        - Email: {transport_order["client"]["email"]}
-        - Phone: {transport_order["client"]["phone"]}
+        if order_number != 6:
+            transport_details = f"""
+            ## Sender details:
+            - Company name: {transport_order["client"]["company"]}
+            - Contact person: {transport_order["client"]["sender_name"]}
+            - VAT number: {transport_order["client"]["vat_number"]}
+            - Address: {transport_order["client"]["address"]}
+            - City: {transport_order["client"]["city"]}
+            - Postal code: {transport_order["client"]["postal_code"]}
+            - Country: {transport_order["client"]["country"]}
+            - Email: {transport_order["client"]["email"]}
+            - Phone: {transport_order["client"]["phone"]}
 
-        ## Goods details:
-        - Description: {transport_order["goods"]}
+            ## Goods details:
+            - Description: {transport_order["goods"]}
 
-        ## Transport dates:
-        - Loading date: {transport_order["loading_date"]}
-        - Unloading date: {transport_order["unloading_date"]}
+            ## Transport dates:
+            - Loading date: {transport_order["loading_date"]}
+            - Unloading date: {transport_order["unloading_date"]}
 
-        ## Pickup address:
-        - Company: {transport_order["pickup_address"]["company"]}
-        - Address: {transport_order["pickup_address"]["address"]}
-        - Country: {transport_order["pickup_address"]["country"]}
+            ## Pickup address:
+            - Company: {transport_order["pickup_address"]["company"]}
+            - Address: {transport_order["pickup_address"]["address"]}
+            - Country: {transport_order["pickup_address"]["country"]}
 
-        ## Delivery address:
-        - Company: {transport_order["delivery_address"]["company"]}
-        - Address: {transport_order["delivery_address"]["address"]}
-        - Country: {transport_order["delivery_address"]["country"]}
+            ## Delivery address:
+            - Company: {transport_order["delivery_address"]["company"]}
+            - Address: {transport_order["delivery_address"]["address"]}
+            - Country: {transport_order["delivery_address"]["country"]}
 
-        ## Intermediate Loading stops: {len(transport_order["intermediate_loading_stops"])}
-        {chr(10).join([f"        - {stop['company']}, {stop['address']}, {stop['country']}" for stop in transport_order["intermediate_loading_stops"]])}
+            ## Intermediate Loading stops: {len(transport_order["intermediate_loading_stops"])}
+            {chr(10).join([f"        - {stop['company']}, {stop['address']}, {stop['country']}" for stop in transport_order["intermediate_loading_stops"]])}
 
-        ## Intermediate Unloading stops: {len(transport_order["intermediate_unloading_stops"])}
-        {chr(10).join([f"        - {stop['company']}, {stop['address']}, {stop['country']}" for stop in transport_order["intermediate_unloading_stops"]])}
-        """
+            ## Intermediate Unloading stops: {len(transport_order["intermediate_unloading_stops"])}
+            {chr(10).join([f"        - {stop['company']}, {stop['address']}, {stop['country']}" for stop in transport_order["intermediate_unloading_stops"]])}
+            """
+
+        else:
+            transport_details = f"""
+            ## Client details (for the email signature):
+            - Company name: {transport_order["client"]["company"]}
+            - Contact person: {transport_order["client"]["sender_name"]}
+            - VAT number: {transport_order["client"]["vat_number"]}
+            - Phone: {transport_order["client"]["phone"]}
+            """
 
         if pdf_html == "no attachment":
             prompt = f"""Generate a fake transport order email based on the following data. 
@@ -344,6 +392,7 @@ class GraphNodes:
         - Replace order numbers, dates, and transport details with realistic values
         - Replace any placeholder text with appropriate content based on the transport order
         - Ensure the email appears to come from the sender company listed below
+        - If no pickup, delivery or stops information is provided, DO NOT INCLUDE it in the email!
 
         The transport is send to the following logistics company:
         Vectrans NV
@@ -398,7 +447,7 @@ class GraphNodes:
         response = response.model_dump()
 
         # Check if we need to create a PDF attachment based on order number
-        if order_number != 1:
+        if order_number not in [1, 6]:  # Only orders 2-5 have PDF templates
             pdf = await create_pdf(response["attachment_html"])
             attachments = [pdf]
         else:
