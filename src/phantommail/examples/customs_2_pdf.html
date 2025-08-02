@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customs Clearance Documents</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20mm;
+            box-sizing: border-box;
+        }
+        .header {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .line {
+            margin: 5px 0;
+        }
+        .barcode {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        td, th {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+            font-size: 11px;
+        }
+        .small-text {
+            font-size: 10px;
+        }
+        .box {
+            border: 1px solid black;
+            padding: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Release/Removal Authority -->
+    <div class="page">
+        <div class="header">RRA11   Destin8      Release / Removal Authority        15/07/25 14:23</div>
+        
+        <div class="line">UVI: 75234    Vessel: NORTHERN STAR</div>
+        
+        <div class="line" style="margin-left: 40px;">Berth: TKS - Terminal Kade South</div>
+        
+        <div class="line" style="margin-left: 40px;">Arrived: 15/07/25 13:45</div>
+        
+        <div class="line" style="margin-left: 20px;">Cargo Broker: ABC - Atlantic Broker Company Ltd.</div>
+        
+        <div class="line" style="margin-left: 20px;">Port of Origin: BEANT - Antwerpen</div>
+        
+        <div class="line">Unit Id: BX2047      Size/Type: 4095</div>
+        
+        <div class="line">Nominated Agent: DHL - DHL Express Belgium NV</div>
+        
+        <div class="line">UCN           Pkgs  Entry Details</div>
+        <div class="line">950047892     45    40GB9KLMN67DELTA2 123456 7890</div>
+        <div class="line">Agents Reference: K44567-RS001234</div>
+        <div class="line">Bill of lading: 95012-4567890123</div>
+        
+        <div style="margin-top: 30px;">
+            <div class="line">***RRA11 - End</div>
+            <div class="line">↑</div>
+        </div>
+    </div>
+
+    <!-- Page 2: Customs Clearance Notification -->
+    <div class="page">
+        <div class="header">RRA06  Destin8 Customs Clearance Notification  15/07/25 14:23</div>
+        
+        <div class="line" style="margin-left: 40px;">UVI: 75234</div>
+        
+        <div class="line" style="margin-left: 30px;">Vessel: NORTHERN STAR</div>
+        
+        <div class="line" style="margin-left: 30px;">Arrived: 15/07/25 13:45</div>
+        
+        <div class="line" style="margin-left: 40px;">Berth: TKS - Terminal Kade South</div>
+        
+        <div class="line" style="margin-left: 50px;">UCN: 75234 7890</div>
+        
+        <div class="line" style="margin-left: 30px;">Unit No: BX2047</div>
+        
+        <div class="line" style="margin-left: 10px;">Nominated agent: DHL - DHL Express Belgium NV</div>
+        
+        <div class="line" style="margin-left: 30px;">Location:</div>
+        
+        <div class="line" style="margin-left: 30px;">Packages: 45</div>
+        
+        <div class="line" style="margin-left: 20px;">Gross Weight: 35678</div>
+        
+        <div class="line" style="margin-left: 10px;">Agents Reference: K44567-RS001234</div>
+        
+        <div class="line" style="margin-left: 10px;">Entry Date & Time: 15/07/25 12:30</div>
+        
+        <div class="line" style="margin-left: 20px;">Entry Number: 40GB9KLMN67DELTA2</div>
+        
+        <div style="margin-top: 30px;">
+            <div class="line">***RRA06 - END</div>
+            <div class="line">↑</div>
+        </div>
+    </div>
+
+    <!-- Page 3: CDS Import Declaration -->
+    <div class="page">
+        <table style="width: 100%;">
+            <tr>
+                <td colspan="4" style="font-size: 14px; font-weight: bold;">
+                    CDS Import <span class="barcode">||||||||||||||||||||||||||||||||||||||||||||</span>
+                </td>
+            </tr>
+            <tr>
+                <td>[1] Declaration [1/1] [1/2]</td>
+                <td>04/D</td>
+                <td>MRN: 25GB 9KLMN67DE LTA2 R0</td>
+                <td>K44567-RS001234</td>
+            </tr>
+            <tr>
+                <td>[2] Forms [1/4]</td>
+                <td>/ / [5] Items [1/9]</td>
+                <td>/ [6] Total packages [6/18]</td>
+                <td>45</td>
+            </tr>
+            <tr>
+                <td colspan="2">[2] Exporter [3/1]</td>
+                <td>[2] Reference [2/4]</td>
+                <td>[2] Seller [3/24]</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    EURO LOGISTICS INTERNATIONAL<br>
+                    5678 INDUSTRIAL AVENUE<br>
+                    BE 2000 ANTWERPEN BELGIUM
+                </td>
+            </tr>
+            <tr>
+                <td>Nr.[3/2]</td>
+                <td colspan="3">Nr.[3/25]</td>
+            </tr>
+            <tr>
+                <td colspan="2">[8] Buyer [3/26]</td>
+                <td colspan="2">Nr.[3/27]</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    PREMIUM IMPORT SOLUTIONS<br>
+                    123 COMMERCE PARK<br>
+                    GB BH45XY BOURNEMOUTH UK
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Nr.[3/18]</td>
+                <td colspan="2">[14] Representative [3/19]</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    SWIFT CARGO SERVICES LTD<br>
+                    UNIT 5 HARBOR POINT<br>
+                    GB SW12 9AB LONDON
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">[17a] Destination country [5/8]</td>
+                <td>GB</td>
+                <td>[14] Representative status [3/21]</td>
+            </tr>
+            <tr>
+                <td>[18] Arrival transport [7/9]</td>
+                <td>11 NORTHERN</td>
+                <td>[20] Delivery terms [4/1]</td>
+                <td>FCA LONDON</td>
+            </tr>
+            <tr>
+                <td>[21] Border transport nationality [7/15]</td>
+                <td>BE</td>
+                <td>[22] Invoice total [4/10] [4/11]</td>
+                <td>45678.50 EUR</td>
+            </tr>
+            <tr>
+                <td>[23] Border transport mode [7/4]</td>
+                <td>1</td>
+                <td>[23] Exchange rate [4/12]</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>[30] Location of goods [5/23]</td>
+                <td colspan="2">GB DOVER PORT</td>
+                <td>[37] Place of loading [5/21]</td>
+            </tr>
+            <tr>
+                <td colspan="4">[31] Container numbers [7/10]</td>
+            </tr>
+            <tr>
+                <td>[40] Summary declaration/Previous documents [2/1]</td>
+                <td colspan="3">
+                    Z345RSTU890VWX123<br>
+                    Y567ABC123DEF456GHI
+                </td>
+            </tr>
+        </table>
+
+        <table style="margin-top: 20px;">
+            <tr>
+                <td colspan="4" style="text-align: center; font-style: italic;">
+                    These exchange rates are only estimates, real exchange rates used by CDS may be different!
+                </td>
+            </tr>
+            <tr>
+                <td>Currency</td>
+                <td>1 EUR</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Exchange Rate (for 1 GBP)</td>
+                <td>1.1789</td>
+                <td colspan="2"></td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 20px; border: 1px solid black; padding: 10px;">
+            <div class="small-text">
+                <div>Acceptance date/time: 2025-07-15 12:30:45</div>
+                <div>Declaration status: Customs Cleared</div>
+                <div>Status date/time: 2025-07-15 14:20:30</div>
+                <div style="margin-top: 10px;">
+                    <table style="border: none;">
+                        <tr>
+                            <td style="border: none;">Tax Type</td>
+                            <td style="border: none;">Payable Amount</td>
+                            <td style="border: none;">Assessed Amount</td>
+                            <td style="border: none;">Security Amount</td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;">A00</td>
+                            <td style="border: none;">0.00</td>
+                            <td style="border: none;">0.00</td>
+                            <td style="border: none;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;">B00</td>
+                            <td style="border: none;">0.00</td>
+                            <td style="border: none;">0.00</td>
+                            <td style="border: none;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;">Total</td>
+                            <td style="border: none;">0.00</td>
+                            <td style="border: none;">0.00</td>
+                            <td style="border: none;">0</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div>LRN [3/5]: K44567-RS001234</div>
+                    <div>[44] Office of presentation [5/26]: [64] Supervising office [5/27]:</div>
+                    <div>[52] Guarantee [8/2][8/3]: [48] Deferred payment [2/6]:</div>
+                    <div>[49] Identification of warehouse [2/7]:</div>
+                    <div>[54] Place and date: 15/07/2025 14:23:00</div>
+                    <div>Signature and name of declarant/representative [1/8]:</div>
+                    <div style="font-weight: bold;">JOHN SMITH</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

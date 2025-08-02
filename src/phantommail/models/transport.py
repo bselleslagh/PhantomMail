@@ -36,6 +36,8 @@ class TransportOrder(BaseModel):
     goods: Goods
     pickup_address: Address
     delivery_address: Address
+    loading_metres: int
+    pallet_count: int
     intermediate_loading_stops: List[Address]
     intermediate_unloading_stops: List[Address]
     loading_date: date

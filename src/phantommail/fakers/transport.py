@@ -83,6 +83,10 @@ class TransportOrderGenerator:
         # Generate unloading date at least 1 day after loading, up to 5 days later
         unloading_date = loading_date + timedelta(days=random.randint(1, 5))
 
+        # Generate loading metres and pallet count
+        loading_metres = random.randint(3, 12)  # Random metres between 3 and 12
+        pallet_count = random.randint(1, 5)  # Random pallet count between 1 and 5
+
         return TransportOrder(
             client=client,
             goods=Goods.random(),
@@ -92,4 +96,6 @@ class TransportOrderGenerator:
             intermediate_unloading_stops=unloading_stops,
             loading_date=loading_date,
             unloading_date=unloading_date,
+            loading_metres=loading_metres,
+            pallet_count=pallet_count,
         )

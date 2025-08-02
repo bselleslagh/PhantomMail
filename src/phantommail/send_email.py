@@ -10,8 +10,6 @@ from phantommail.models.email import FullEmail
 
 logger = setup_logger(__name__)
 
-recipient_email = "ben@vectrix.ai"
-
 
 def send(email: FullEmail) -> str:
     """Send an email to the recipient with the given subject and body.

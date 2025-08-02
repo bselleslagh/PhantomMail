@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU Export Declaration - Dummy Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 10mm;
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid black;
+        }
+        .form-field {
+            border: 1px solid black;
+            padding: 3px;
+            min-height: 20px;
+        }
+        .form-field.span-2 {
+            grid-column: span 2;
+        }
+        .form-field.span-3 {
+            grid-column: span 3;
+        }
+        .form-field.span-4 {
+            grid-column: span 4;
+        }
+        .field-label {
+            font-size: 8px;
+            font-weight: bold;
+        }
+        .field-value {
+            margin-top: 2px;
+        }
+        .barcode {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+        .control-section {
+            margin-top: 20px;
+            border: 1px solid black;
+            padding: 10px;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .items-table td, .items-table th {
+            border: 1px solid black;
+            padding: 3px;
+            font-size: 9px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1 -->
+    <div class="page">
+        <div class="header">
+            EUROPEAN UNION DECLARATION STATUS: GOODS RELEASED FOR EXPORT<br>
+            BUSINESS CONTINUITY - EXPORT ACCOMPANYING DOCUMENT
+        </div>
+        
+        <div class="form-grid">
+            <!-- Row 1 -->
+            <div class="form-field span-2">
+                <div class="field-label">Exporter [13 01] ID</div>
+                <div class="field-value">BE0123456789<br>DUMMY EXPORT CO<br>Dummy Street 42<br>1000 Brussels BE</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Type [11 01]</div>
+                <div class="field-value">EX</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">MRN</div>
+                <div class="field-value barcode">25BE000001234567A0</div>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="form-field">
+                <div class="field-label">Forms</div>
+                <div class="field-value">1</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">SCI [11 04]</div>
+                <div class="field-value">3</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">Date of acceptance [15 09]</div>
+                <div class="field-value">15/07/25</div>
+            </div>
+            
+            <!-- Row 3 -->
+            <div class="form-field span-2">
+                <div class="field-label">Customs office of export [17 02]</div>
+                <div class="field-value">BE123456</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Total items</div>
+                <div class="field-value">5</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Total packages</div>
+                <div class="field-value">20</div>
+            </div>
+            
+            <!-- Row 4 -->
+            <div class="form-field span-2">
+                <div class="field-label">Consignee [13 03] ID</div>
+                <div class="field-value">Dummy Import Services Ltd<br>Test Road 123<br>GB-ABC123 London/ GB</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Gross mass [18 04]</div>
+                <div class="field-value">25000</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Security [11 07]</div>
+                <div class="field-value">1</div>
+            </div>
+            
+            <!-- Row 5 -->
+            <div class="form-field span-2">
+                <div class="field-label">LRN [12 09]</div>
+                <div class="field-value">123456789012345678901</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">UCR [12 08]</div>
+                <div class="field-value">123456 25EXP0001 234567 25EXP0002</div>
+            </div>
+            
+            <!-- Row 6 -->
+            <div class="form-field span-2">
+                <div class="field-label">Declarant [13 05] ID</div>
+                <div class="field-value">BE0987654321<br>DUMMY LOGISTICS N.V.<br>Port Street 99<br>2000 ANTWERPEN BE</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">Presentation of goods date and time [15 08]</div>
+                <div class="field-value"></div>
+            </div>
+            
+            <!-- Row 7 -->
+            <div class="form-field span-2">
+                <div class="field-label">Location of goods [16 15]</div>
+                <div class="field-value">C U BEDUMMY00123001</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">Representative [13 06] ID</div>
+                <div class="field-value"></div>
+            </div>
+            
+            <!-- Row 8 -->
+            <div class="form-field">
+                <div class="field-label">Country of export [16 07]</div>
+                <div class="field-value">BE</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Country of destination [16 03]</div>
+                <div class="field-value">GB</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">Country of routing of consignment [16 12]</div>
+                <div class="field-value">BE,NL,GB</div>
+            </div>
+            
+            <!-- Transport Information -->
+            <div class="form-field">
+                <div class="field-label">Inland mode of transport [19 04]</div>
+                <div class="field-value">3</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Border mode of transport [19 03]</div>
+                <div class="field-value">1</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">Departure transport means [19 05]</div>
+                <div class="field-value">40,DUMMY,BE|</div>
+            </div>
+            
+            <!-- Additional fields -->
+            <div class="form-field span-2">
+                <div class="field-label">Carrier [13 12] ID</div>
+                <div class="field-value"></div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Transport Equipment [19 07]</div>
+                <div class="field-value"></div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Container [19 01] [ ]</div>
+                <div class="field-value"></div>
+            </div>
+            
+            <!-- Customs offices -->
+            <div class="form-field span-2">
+                <div class="field-label">CUSTOMS OFFICE OF EXIT [17 01]</div>
+                <div class="field-value">BE999999</div>
+            </div>
+            <div class="form-field span-2">
+                <div class="field-label">Warehouse [12 11]</div>
+                <div class="field-value"></div>
+            </div>
+            
+            <!-- Documents section -->
+            <div class="form-field span-4">
+                <div class="field-label">Previous document [12 01]</div>
+                <div class="field-value"></div>
+            </div>
+            <div class="form-field span-4">
+                <div class="field-label">Supporting document [12 03]</div>
+                <div class="field-value">1,9999,DUMMY123</div>
+            </div>
+            <div class="form-field span-4">
+                <div class="field-label">Transport document [12 05]</div>
+                <div class="field-value">1,5555,TRANSPORT999</div>
+            </div>
+            <div class="form-field span-4">
+                <div class="field-label">Additional reference [12 04]</div>
+                <div class="field-value">1,9999,5<br>2,1VAT,BE0123456789<br>3,9999,999</div>
+            </div>
+            
+            <!-- Financial information -->
+            <div class="form-field span-2">
+                <div class="field-label">Delivery Terms [14 01]</div>
+                <div class="field-value">DAP,,LONDON,GB,</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Total amount invoiced [14 06]</div>
+                <div class="field-value">35000</div>
+            </div>
+            <div class="form-field">
+                <div class="field-label">Inv. Cur. [14 05]</div>
+                <div class="field-value">EUR</div>
+            </div>
+        </div>
+        
+        <div class="control-section">
+            <h3>CONTROL BY OFFICE OF EXPORT</h3>
+            <p>Result A2 &nbsp;&nbsp;&nbsp;&nbsp; Date of arrival</p>
+            <p>Seals affixed: Number: &nbsp;&nbsp;&nbsp;&nbsp; Examination of seals:</p>
+            <p>Identity: &nbsp;&nbsp;&nbsp;&nbsp; Remarks</p>
+            <p>Date of Release for Export: &nbsp;&nbsp;&nbsp;&nbsp; Date of Release for Exit:</p>
+        </div>
+    </div>
+
+    <!-- Page 2 - List of Items -->
+    <div class="page">
+        <div class="header">
+            EUROPEAN UNION<br>
+            BUSINESS CONTINUITY - EXPORT ACCOMPANYING<br>
+            DOCUMENT - LIST OF ITEMS FORM<br>
+            2 / 3<br>
+            MRN 25BE000001234567A0
+        </div>
+        
+        <table class="items-table">
+            <tr>
+                <td colspan="4">
+                    <strong>Dec. G. I. Nr. [11 03] 1 / 5</strong><br>
+                    <strong>UCR [12 08]</strong><br>
+                    <strong>Description of Goods [18 05]</strong><br>
+                    Dummy product description - cold rolled steel sheets, thickness 5mm, containing nickel alloy
+                </td>
+            </tr>
+            <tr>
+                <td><strong>TARIC-Code [18 09]</strong><br>999999 99</td>
+                <td><strong>Country Export [16 07]</strong><br>BE</td>
+                <td><strong>Country of destination [16 03]</strong><br>GB</td>
+                <td><strong>Gross mass [18 04]</strong><br>5000</td>
+            </tr>
+            <tr>
+                <td><strong>Statistical Value [99 06]</strong><br>7500.00 EUR</td>
+                <td><strong>Nett mass (kg) [18 01]</strong><br>4800</td>
+                <td><strong>Country of Origin [16 08]</strong><br>EU</td>
+                <td><strong>Nature of Transaction [99 05]</strong><br>1 1</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Supporting document [12 03]</strong><br>
+                    1,N999,DUMMY001
+                </td>
+            </tr>
+        </table>
+        
+        <br>
+        
+        <table class="items-table">
+            <tr>
+                <td colspan="4">
+                    <strong>Dec. G. I. Nr. [11 03] 2 / 5</strong><br>
+                    <strong>UCR [12 08]</strong><br>
+                    <strong>Description of Goods [18 05]</strong><br>
+                    Dummy product description - aluminum plates, various sizes, industrial grade
+                </td>
+            </tr>
+            <tr>
+                <td><strong>TARIC-Code [18 09]</strong><br>888888 88</td>
+                <td><strong>Country Export [16 07]</strong><br>BE</td>
+                <td><strong>Country of destination [16 03]</strong><br>GB</td>
+                <td><strong>Gross mass [18 04]</strong><br>3500</td>
+            </tr>
+            <tr>
+                <td><strong>Statistical Value [99 06]</strong><br>5000.00 EUR</td>
+                <td><strong>Nett mass (kg) [18 01]</strong><br>3300</td>
+                <td><strong>Country of Origin [16 08]</strong><br>EU</td>
+                <td><strong>Nature of Transaction [99 05]</strong><br>1 1</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Supporting document [12 03]</strong><br>
+                    1,N999,DUMMY002
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Page 3 - Continuation of Items -->
+    <div class="page">
+        <div class="header">
+            EUROPEAN UNION<br>
+            BUSINESS CONTINUITY - EXPORT ACCOMPANYING<br>
+            DOCUMENT - LIST OF ITEMS FORM<br>
+            3 / 3<br>
+            MRN 25BE000001234567A0
+        </div>
+        
+        <table class="items-table">
+            <tr>
+                <td colspan="4">
+                    <strong>Dec. G. I. Nr. [11 03] 3 / 5</strong><br>
+                    <strong>UCR [12 08]</strong><br>
+                    <strong>Description of Goods [18 05]</strong><br>
+                    Dummy product description - copper wire, various gauges, electrical grade
+                </td>
+            </tr>
+            <tr>
+                <td><strong>TARIC-Code [18 09]</strong><br>777777 77</td>
+                <td><strong>Country Export [16 07]</strong><br>BE</td>
+                <td><strong>Country of destination [16 03]</strong><br>GB</td>
+                <td><strong>Gross mass [18 04]</strong><br>8000</td>
+            </tr>
+            <tr>
+                <td><strong>Statistical Value [99 06]</strong><br>12000.00 EUR</td>
+                <td><strong>Nett mass (kg) [18 01]</strong><br>7800</td>
+                <td><strong>Country of Origin [16 08]</strong><br>EU</td>
+                <td><strong>Nature of Transaction [99 05]</strong><br>1 1</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Supporting document [12 03]</strong><br>
+                    1,N999,DUMMY003
+                </td>
+            </tr>
+        </table>
+        
+        <br>
+        
+        <table class="items-table">
+            <tr>
+                <td colspan="4">
+                    <strong>Dec. G. I. Nr. [11 03] 4 / 5</strong><br>
+                    <strong>UCR [12 08]</strong><br>
+                    <strong>Description of Goods [18 05]</strong><br>
+                    Dummy product description - plastic pellets, industrial grade, various colors
+                </td>
+            </tr>
+            <tr>
+                <td><strong>TARIC-Code [18 09]</strong><br>666666 66</td>
+                <td><strong>Country Export [16 07]</strong><br>BE</td>
+                <td><strong>Country of destination [16 03]</strong><br>GB</td>
+                <td><strong>Gross mass [18 04]</strong><br>4500</td>
+            </tr>
+            <tr>
+                <td><strong>Statistical Value [99 06]</strong><br>6000.00 EUR</td>
+                <td><strong>Nett mass (kg) [18 01]</strong><br>4300</td>
+                <td><strong>Country of Origin [16 08]</strong><br>EU</td>
+                <td><strong>Nature of Transaction [99 05]</strong><br>1 1</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Supporting document [12 03]</strong><br>
+                    1,N999,DUMMY004
+                </td>
+            </tr>
+        </table>
+        
+        <br>
+        
+        <table class="items-table">
+            <tr>
+                <td colspan="4">
+                    <strong>Dec. G. I. Nr. [11 03] 5 / 5</strong><br>
+                    <strong>UCR [12 08]</strong><br>
+                    <strong>Description of Goods [18 05]</strong><br>
+                    Dummy product description - textile materials, mixed fibers, industrial use
+                </td>
+            </tr>
+            <tr>
+                <td><strong>TARIC-Code [18 09]</strong><br>555555 55</td>
+                <td><strong>Country Export [16 07]</strong><br>BE</td>
+                <td><strong>Country of destination [16 03]</strong><br>GB</td>
+                <td><strong>Gross mass [18 04]</strong><br>4000</td>
+            </tr>
+            <tr>
+                <td><strong>Statistical Value [99 06]</strong><br>4500.00 EUR</td>
+                <td><strong>Nett mass (kg) [18 01]</strong><br>3800</td>
+                <td><strong>Country of Origin [16 08]</strong><br>EU</td>
+                <td><strong>Nature of Transaction [99 05]</strong><br>1 1</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Supporting document [12 03]</strong><br>
+                    1,N999,DUMMY005
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

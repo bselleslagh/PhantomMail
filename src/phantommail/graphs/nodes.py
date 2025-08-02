@@ -1,10 +1,8 @@
 import random
 from importlib import resources
 
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_vertexai import ChatVertexAI
-from pydantic import BaseModel
 
 from phantommail.fakers.complaint import FakeComplaint
 from phantommail.fakers.declaration import DeclarationGenerator
@@ -24,7 +22,10 @@ class GraphNodes:
 
     def __init__(self):
         """Initialize the graph nodes."""
-        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro", temperature=0.5)
+        self.llm = ChatVertexAI(
+            model="gemini-2.5-pro",
+            temperature=0.5,
+        )
 
     def email_types(self, state: FakeEmailState, config):
         """Get the email types."""
@@ -38,42 +39,109 @@ class GraphNodes:
     async def generate_declaration(self, state: FakeEmailState, config):
         """Generate a fake customs declaration email."""
         declaration_generator = DeclarationGenerator()
-        declaration = declaration_generator.generate_declaration()
+        declaration = declaration_generator.generate_declaration().model_dump()
 
-        html_template = (
-            resources.files("phantommail.assets")
-            .joinpath("customs_template.html")
+        logger.info(f"Generated customs declaration: {declaration}")
+
+        example_number = random.randint(1, 2)
+
+        # Read example templates
+        email_html = (
+            resources.files("phantommail.examples")
+            .joinpath(f"customs_{example_number}_email.html")
             .read_text()
         )
 
-        instruction = SystemMessage(
-            content="You are an assistant that generates the HTML version of a customs declaration. You only return raw HTML, no other text."
+        pdf_html = (
+            resources.files("phantommail.examples")
+            .joinpath(f"customs_{example_number}_pdf.html")
+            .read_text()
         )
 
-        prompt = HumanMessage(
-            content=f"""Generate the HTML version of the following customs declaration.\n
-{declaration}\n\n
-Use the following HTML template to generate the HTML version of the customs declaration.\n
-{html_template}
+        # Format declaration details for use in prompts
+        declaration_details = f"""
+        ## Declaration details:
+        - MRN: {declaration["mrn"]}
+        - Declaration type: {declaration["declaration_type"]}
+        - Reference number: {declaration["reference_number"]}
+        - Total packages: {declaration["total_packages"]}
+        - Items count: {declaration["items_count"]}
+        
+        ## Exporter details:
+        - Company name: {declaration["exporter"]["name"]}
+        - EORI/VAT number: {declaration["exporter"]["eori_number"]}
+        - Address: {declaration["exporter"]["address"]}
+
+        ## Importer details:
+        - Company name: {declaration["importer"]["name"]}
+        - EORI/VAT number: {declaration["importer"]["eori_number"]}
+        - Address: {declaration["importer"]["address"]}
+
+        ## Transport details:
+        - Transport mode: {declaration["transport_info"]["transport_mode"]}
+        - Place of loading: {declaration["transport_info"]["place_of_loading"]}
+        - Arrival transport: {declaration["transport_info"]["arrival_transport"]}
+        - Border transport: {declaration["transport_info"]["border_transport"]}
+
+        ## Goods details:
+        {chr(10).join([f"        - Item {item['item_number']}: {item['description_of_goods'] or 'Various goods'} ({item['packages'] or 0} packages, {item['gross_mass_kg'] or 0}kg)" for item in declaration["items"]])}
+
+        ## Valuation:
+        - Invoice currency: {declaration["invoice_currency"]}
+        - Invoice value: {declaration["invoice_value"]}
+        - Acceptance date: {declaration["acceptance_date_time"]}
+        - Status: {declaration["declaration_status"]}
         """
+
+        prompt = f"""Generate a fake customs declaration email based on the following data.
+        
+        IMPORTANT: Replace ALL references in BOTH the email HTML and PDF HTML templates with the actual data:
+        - Replace all MRN numbers, company names, addresses, contact details with the declaration information
+        - Replace dates, values, and goods descriptions with realistic values based on the declaration
+        - Replace any placeholder text with appropriate content based on the customs declaration
+        - Ensure both the email and PDF appear to come from the exporter company
+        - Make sure the PDF contains detailed customs information matching the declaration
+        - Don't put customs declaration in the subject but make it very abstract"
+        
+        The customs declaration is being sent to:
+        Vectrans NV
+        Kipdorpbrug 1
+        2000 Antwerpen
+        VAT: BE 1234.567.89
+
+        Declaration details:
+        {declaration_details}
+
+        Create an email body and attachment in the following style:
+        <body_html>
+        {email_html}
+        </body_html>
+
+        <attachment_html>
+        {pdf_html}
+        </attachment_html>
+        """
+
+        llm_with_tools = self.llm.with_structured_output(Email)
+
+        response = await llm_with_tools.ainvoke(
+            [
+                HumanMessage(content=prompt),
+            ]
         )
 
-        class HTMLTemplate(BaseModel):
-            html: str
+        response = response.model_dump()
 
-        llm_with_tools = self.llm.with_structured_output(HTMLTemplate)
+        # Create PDF attachment
+        pdf = await create_pdf(response["attachment_html"])
 
-        messages = [instruction, prompt]
-        response = llm_with_tools.invoke(messages)
-        pdf = await create_pdf(response.html)
-        messages.append(AIMessage(content=response.html))
-        messages.append(
-            HumanMessage(
-                content="Now this document will be added as an attachment to the email."
-            )
-        )
+        logger.info(f"Response from model: {response}")
 
-        return {"messages": messages, "attachments": [pdf]}
+        return {
+            "attachments": [pdf],
+            "email": response["body_html"],
+            "subject": response["subject"],
+        }
 
     async def generate_question(self, state: FakeEmailState, config):
         """Generate a fake question email."""
@@ -111,10 +179,11 @@ Use the following HTML template to generate the HTML version of the customs decl
         """
         )
         messages = [instruction, prompt]
-        response = self.llm.invoke(messages)
-        messages.append(response)
+        llm_with_tools = self.llm.with_structured_output(Email)
+        response = llm_with_tools.invoke(messages)
+        response = response.model_dump()
 
-        return {"messages": messages}
+        return {"email": response["body_html"], "subject": response["subject"]}
 
     async def generate_order(self, state: FakeEmailState, config):
         """Generate a fake transport order email."""
@@ -190,7 +259,14 @@ Use the following HTML template to generate the HTML version of the customs decl
         - Replace order numbers, dates, and transport details with realistic values
         - Replace any placeholder text with appropriate content based on the transport order
         - Ensure the email appears to come from the sender company listed below
-        
+
+        The transport is send to the following logistics company:
+        Vectrans NV
+        Kipdorpbrug 1
+        2000 Antwerpen
+        VAT: BE 1234.567.89
+
+
         Transport details:
         {transport_details}
 
@@ -226,12 +302,7 @@ Use the following HTML template to generate the HTML version of the customs decl
         </attachment_html>
         """
 
-        llm = ChatVertexAI(
-            model="gemini-2.5-pro",
-            temperature=0,
-        )
-
-        llm_with_tools = llm.with_structured_output(Email)
+        llm_with_tools = self.llm.with_structured_output(Email)
 
         response = await llm_with_tools.ainvoke(
             [

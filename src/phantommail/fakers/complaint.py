@@ -10,7 +10,7 @@ class FakeComplaint:
         """Initialize the fake complaint generator."""
         self.faker = Faker("en_GB")
         self.complaint_templates = [
-            "I am writing to express my deep dissatisfaction with the delivery service to {delivery_address}. The package was supposed to arrive on {expected_date} but it's still not here.",
+            "I am writing to express my deep dissatisfaction with the delivery service to {delivery_address}. The truck was supposed to arrive on {expected_date} but it's still not here.",
             "I want to file a formal complaint about the handling of my shipment from {pickup_address}. The delivery person was extremely rude and damaged my package.",
             "This is unacceptable! My delivery to {delivery_address} was scheduled for {expected_date} but arrived completely damaged.",
             "I am furious about the state of my package delivered to {delivery_address}. The contents were damaged and the box was crushed.",

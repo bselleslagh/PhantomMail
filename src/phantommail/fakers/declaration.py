@@ -1,5 +1,7 @@
+import csv
 import random
 from datetime import datetime
+from pathlib import Path
 
 from faker import Faker
 
@@ -20,12 +22,22 @@ class DeclarationGenerator:
         """Initialize the declaration generator."""
         self.faker = Faker()
 
-    def _generate_party(self) -> Party:
-        """Generate a fake party with name, address and EORI number."""
+    def _generate_client(self) -> Party:
+        """Generate a fake party."""
+        # Select a random customer from the CSV
+
+        # Load customers from CSV
+        self.customers = []
+        csv_path = Path(__file__).parent.parent / "assets" / "customers.csv"
+        with open(csv_path, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.customers = list(reader)
+        customer = random.choice(self.customers)
+
         return Party(
-            name=self.faker.company(),
-            address=self.faker.address(),
-            eori_number=f"GB{self.faker.numerify('#########')}",
+            name=customer["company_name"],
+            address=f"{customer['address']}, {customer['postal_code']} {customer['city']}, {customer['country']}",
+            eori_number=customer["vat_number"],  # Using VAT number as EORI for now
         )
 
     def _generate_transport_info(self) -> TransportInfo:
@@ -79,11 +91,11 @@ class DeclarationGenerator:
             items_count=1,
             total_packages=goods.quantity,
             # Parties
-            exporter=self._generate_party(),
-            importer=self._generate_party(),
-            declarant=self._generate_party(),
-            representative=self._generate_party(),
-            buyer=self._generate_party(),
+            exporter=self._generate_client(),
+            importer=self._generate_client(),
+            declarant=self._generate_client(),
+            representative=self._generate_client(),
+            buyer=self._generate_client(),
             # Transport details
             transport_info=self._generate_transport_info(),
             # Items
