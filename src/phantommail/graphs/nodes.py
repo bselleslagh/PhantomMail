@@ -6,8 +6,10 @@ from langchain_google_vertexai import ChatVertexAI
 
 from phantommail.fakers.complaint import FakeComplaint
 from phantommail.fakers.declaration import DeclarationGenerator
+from phantommail.fakers.price_request import PriceRequestGenerator
 from phantommail.fakers.question import TransportQuestionGenerator
 from phantommail.fakers.transport import TransportOrderGenerator
+from phantommail.fakers.waiting_costs import WaitingCostsGenerator
 from phantommail.graphs.state import FakeEmailState
 from phantommail.helpers.html_to_pdf import create_pdf
 from phantommail.logger import setup_logger
@@ -29,7 +31,14 @@ class GraphNodes:
 
     def email_types(self, state: FakeEmailState, config):
         """Get the email types."""
-        types = ["order", "question", "complaint", "declaration"]
+        types = [
+            "order",
+            "question",
+            "complaint",
+            "declaration",
+            "price_request",
+            "waiting_costs",
+        ]
 
         if "email_type" in state and state["email_type"] in types:
             return state["email_type"]
@@ -181,6 +190,82 @@ class GraphNodes:
         messages = [instruction, prompt]
         llm_with_tools = self.llm.with_structured_output(Email)
         response = llm_with_tools.invoke(messages)
+        response = response.model_dump()
+
+        return {"email": response["body_html"], "subject": response["subject"]}
+
+    async def generate_price_request(self, state: FakeEmailState, config):
+        """Generate a fake price request email."""
+        price_request_generator = PriceRequestGenerator()
+        price_request = price_request_generator.generate_price_request()
+
+        instruction = SystemMessage(
+            content="You are an assistant that generates fake price negotiation emails for transport services. The emails are meant for Vectrix Logistics NV"
+        )
+
+        prompt = HumanMessage(
+            content=f"""Generate a professional price negotiation email based on the following data. 
+        
+        IMPORTANT:
+        - Use the exact company details and signature provided
+        - Write in {price_request["language"]} language
+        - Include the transport route: {price_request["origin"]} to {price_request["destination"]}
+        - Include the transport date: {price_request["transport_date"]}
+        - Make the subject abstract but related to price inquiry (e.g., "Transport inquiry {price_request["origin"]}-{price_request["destination"]}")
+        - Include the price negotiation message naturally in the email body
+        - End with the complete signature block provided
+        
+        Price request details:
+        {price_request["formatted_message"]}
+        """
+        )
+
+        messages = [instruction, prompt]
+        llm_with_tools = self.llm.with_structured_output(Email)
+        response = await llm_with_tools.ainvoke(messages)
+        response = response.model_dump()
+
+        return {"email": response["body_html"], "subject": response["subject"]}
+
+    async def generate_waiting_costs(self, state: FakeEmailState, config):
+        """Generate a fake waiting costs dispute email."""
+        waiting_costs_generator = WaitingCostsGenerator()
+        waiting_costs_data = waiting_costs_generator.generate_waiting_costs_scenario()
+
+        instruction = SystemMessage(
+            content="You are an assistant that generates fake dispute emails responding to waiting cost charges from Vectrans logistics company. The emails should professionally dispute the charges while maintaining a business relationship."
+        )
+
+        prompt = HumanMessage(
+            content=f"""Generate a professional dispute email based on the following waiting costs scenario.
+        
+        IMPORTANT:
+        - Vectrans is charging waiting costs for a delivery issue
+        - The customer is disputing these charges
+        - Use the exact dispute message and signature provided
+        - Write in {waiting_costs_data["language"]} language
+        - Make the subject reference the delivery issue (e.g., "RE: Waiting costs - Delivery {waiting_costs_data["scenario"]["delivery_date"]} {waiting_costs_data["scenario"]["delivery_city"]}")
+        - Include the reference numbers in the email
+        - Maintain a professional but firm tone
+        
+        Waiting costs scenario:
+        - Delivery location: {waiting_costs_data["scenario"]["delivery_city"]} - {waiting_costs_data["scenario"]["destination_company"]}
+        - Delivery date: {waiting_costs_data["scenario"]["delivery_date"]}
+        - Order reference: {waiting_costs_data["scenario"]["order_ref"]}
+        - Delivery reference: {waiting_costs_data["scenario"]["delivery_ref"]}
+        - Tracking: {waiting_costs_data["scenario"]["tracking_ref"]}
+        - Issue: Driver could not unload because {waiting_costs_data["scenario"]["waiting_reason"]}
+        - Waiting time: {waiting_costs_data["scenario"]["waiting_hours"]} hours
+        - Charged amount: {waiting_costs_data["scenario"]["total_cost"]}€
+        
+        Dispute response:
+        {waiting_costs_data["formatted_message"]}
+        """
+        )
+
+        messages = [instruction, prompt]
+        llm_with_tools = self.llm.with_structured_output(Email)
+        response = await llm_with_tools.ainvoke(messages)
         response = response.model_dump()
 
         return {"email": response["body_html"], "subject": response["subject"]}
